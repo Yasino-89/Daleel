@@ -1,0 +1,1122 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title id="page-title">رؤيتي الشخصية - مشروع قيد الإنشاء</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet"> <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <style> @font-face { font-family: 'HelveticaNeueLTArabic-Roman'; src: url('https://fonts.example.com/HelveticaNeueLTArabic-Roman.ttf') format('truetype'); }
+    body {
+        font-family: 'HelveticaNeueLTArabic-Roman', 'Tajawal', sans-serif;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('1.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+        color: #535353;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+    }
+    
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.75);
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    
+    header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    h1 {
+        color: #E99F80;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .subtitle {
+        color: #7f1c8d;
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+    
+    .section {
+        display: none;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        background-color: rgba(249, 249, 249, 0.7);
+    }
+    
+    .section.active {
+        display: block;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .question {
+        font-size: 1.3rem;
+        color: #535353;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+    
+    .example {
+        font-size: 0.9rem;
+        color: #E99F80;
+        font-style: italic;
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: rgba(236, 240, 241, 0.5);
+        border-radius: 5px;
+    }
+    
+    textarea, input[type="text"] {
+        width: 96%;
+        padding: 12px;
+        border: 1px solid #E99F80;
+        border-radius: 5px;
+        font-family: inherit;
+        font-size: 1rem;
+        margin-bottom: 15px;
+        resize: vertical;
+        transition: border 0.3s;
+    }
+    
+    textarea:focus, input[type="text"]:focus {
+        border-color: #3428db;
+        outline: none;
+    }
+    
+    .btn {
+        background-color: #E99F80;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+        margin-right: 10px;
+    }
+    
+    .btn:hover {
+        background-color: #F14A0F;
+    }
+    
+    .btn-secondary {
+        background-color: #E99F80;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #7f8c8d;
+    }
+    
+    .navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    
+    .progress-bar {
+        height: 5px;
+        background-color: #535353;
+        margin-bottom: 30px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    
+    .progress {
+        height: 100%;
+        background-color: #E99F80;
+        width: 0%;
+        transition: width 0.3s;
+    }
+    
+    .vision-summary, .goal-item, .plan-item {
+        background-color: #e3f3f1;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    
+    .goal-form, .plan-form {
+        margin-bottom: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+    
+    .final-report {
+        background-color: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .final-section {
+        margin-bottom: 25px;
+    }
+    
+    .final-section h3 {
+        color: #E99F80;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .lang-switcher {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .lang-btn {
+        background: none;
+        border: none;
+        color: #3498db;
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin: 0 5px;
+        padding: 5px 10px;
+        border-radius: 3px;
+    }
+    
+    .lang-btn.active {
+        font-weight: bold;
+        background-color: #3498db;
+        color: white;
+    }
+    
+    .ai-suggestion {
+        color: #E99F80;
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: inline-block;
+    }
+    
+    .goal-plan-container {
+        background-color: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .goal-plan-container h3 {
+        margin-top: 0;
+        color: #2c3e50;
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            margin: 10px;
+            padding: 15px;
+        }
+        
+        h1 {
+            font-size: 2rem;
+        }
+    }
+    
+    body[dir="ltr"] {
+        text-align: left;
+    }
+    
+    body[dir="rtl"] {
+        text-align: right;
+    }
+
+h1, h2, h3 {
+  page-break-after: avoid;
+  page-break-inside: avoid;
+}
+.final-section {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+</style>
+
+</head> <body> <div class="lang-switcher"> <button class="lang-btn active" onclick="switchLanguage('ar')">العربية</button> <button class="lang-btn" onclick="switchLanguage('en')">English</button> </div>
+
+<div class="container">
+    <header>
+<div id="owner-name-container" style="margin-top: 20px;">
+    <label for="owner-name" style="font-weight: bold;"><span id="owner-label">اسم صاحب الرؤية:</span></label>
+    <input type="text" id="owner-name" placeholder="اكتب اسمك هنا..." placeholder="" />
+</div>
+
+        <h1 id="main-title">رؤيتي الشخصية</h1>
+        <p class="subtitle" id="main-subtitle">أنا... مشروع قيد الإنشاء</p>
+    </header>
+    
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+    
+    
+<!-- قسم بناء الرؤية الشخصية -->
+<div class="section active" id="vision-section">
+    <h2>بناء الرؤية الشخصية</h2>
+    <div id="vision-questions">
+        <div class="vision-question active">
+            <div class="question">من أريد أن أكون؟ (الهوية الشخصية)</div>
+            <div class="example">مثال: قائد ملهم، إنسان حكيم، شخص ذو تأثير إيجابي في مجتمعه.</div>
+            <textarea id="q1" rows="4" placeholder="صف من ترغب أن تكون عليه في المستقبل، أي شكل الشخصية والصفات التي تطمح للتحلي بها..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(1)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+        <div class="vision-question">
+            <div class="question">ما القيم التي تود أن تعيش بها؟</div>
+            <div class="example">مثال: الصدق، الإخلاص، الإبداع، التعاطف، المسؤولية الاجتماعية.</div>
+            <textarea id="q2" rows="4" placeholder="ما هي القيم والمبادئ التي تعد الأساس الذي تبني عليه حياتك..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(2)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+        <div class="vision-question">
+            <div class="question">ماذا أريد أن أفعل؟ (الإنجازات)</div>
+            <div class="example">مثال: تأسيس مشروع، تأليف كتاب، الحصول على شهادة متميزة.</div>
+            <textarea id="q3" rows="4" placeholder="احدد أبرز الإنجازات والأعمال التي تسعى إلى تحقيقها خلال مسيرتك..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(3)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+        <div class="vision-question">
+            <div class="question">ما الأمور التي تعطيك شعورًا بالمعنى؟</div>
+            <div class="example">مثال: مساعدة الآخرين، الإبداع في العمل، التعلم المستمر، بناء علاقات عميقة.</div>
+            <textarea id="q4" rows="4" placeholder="فكر في اللحظات التي شعرت فيها بالامتلاء، بالسعادة، أو بأنك تساهم في شيء أكبر من نفسك... ..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(4)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+        <div class="vision-question">
+            <div class="question">من قدوتك ولماذا؟</div>
+            <div class="example">مثال: والدي لأنه شخص صبور ومثابر، أو فلان لأنها تجمع بين النجاح المهني والإنساني.</div>
+            <textarea id="q5" rows="4" placeholder="قدوتك تعكس القيم التي تؤمن بها، والصفات التي تطمح أن تكون جزءًا منك… فكر: ما الذي يجعل هذا الشخص مصدر إلهام لك؟..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(5)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+        <div class="vision-question">
+            <div class="question">ما الذي أريد امتلاكه؟ (الموارد والمكتسبات)</div>
+            <div class="example">مثال: دخل مالي مستقر، منزل أحلامي، مكتبة شخصية، علاقات قوية.</div>
+            <textarea id="q6" rows="4" placeholder="وضّح ما هي الموارد المادية أو المكتسبات التي تطمح للحصول عليها والتي تدعم رؤيتك..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(6)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+        <div class="vision-question">
+            <div class="question">كيف أريد أن أشعر وأفكر؟ (الحالة النفسية والفكرية)</div>
+            <div class="example">مثال: طمأنينة داخلية، شغف، حب للتعلم، عقلية تطوير مستمر.</div>
+            <textarea id="q7" rows="4" placeholder="تخيّل حالتك الذهنية والعاطفية التي تريد أن تعيشها. ما الشعور العام الذي تنشده في حياتك؟..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(7)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+        <div class="vision-question">
+            <div class="question">من أود مصاحبته؟ (العلاقات والدعم)</div>
+            <div class="example">مثال: أصدقاء ملهمون، مرشدون، شبكة داعمة.</div>
+            <textarea id="q8" rows="4" placeholder="تصوّر نوعية العلاقات الاجتماعية والدعم الذي تريد إحاطة نفسك به. أي من تريد أن يكونوا حولك في رحلتك؟..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(8)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+        <div class="vision-question">
+            <div class="question">ما الأثر الذي أطمح إليه؟ (الأثر والرسالة)</div>
+            <div class="example">مثال: ترك بصمة في التعليم، المساهمة في تحسين حياة الآخرين.</div>
+            <textarea id="q9" rows="4" placeholder="بيّن الأثر أو البصمة التي تريد إحداثها في حياة الآخرين أو في المجتمع من حولك ضمن إطار رؤيتك. فكر في السبب الأسمى وراء طموحاتك: ماذا تريد أن تقدم للعالم؟..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(9)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+        <div class="vision-question">
+            <div class="question">الإطار الزمني لتحقيق الرؤية</div>
+            <div class="example">مثال: خلال السنوات الخمس القادمة، بحلول 2030.</div>
+            <textarea id="q10" rows="4" placeholder="حدد أفقًا زمنيًا تقريببيًا للوصول إلى رؤيتك. رؤية بلا إطار زمني تبقى أمنية بلا التزام. ..."></textarea>
+    
+            <div class="ai-suggestion" onclick="generateAISuggestion(10)">اقترح صياغة باستخدام الذكاء الاصطناعي</div>
+        </div>
+    </div>
+    <div class="navigation">
+        <button class="btn btn-secondary" id="prev-btn" style="display: none;" onclick="prevQuestion()">السابق</button>
+        <button class="btn" id="next-btn" onclick="nextQuestion()">التالي</button>
+    </div>
+</div>
+<!-- قسم ملخص الرؤية -->
+
+    <div class="section" id="vision-summary-section">
+        <h2>✍️ رؤيتي</h2>
+        <div class="vision-summary">
+    <label for="vision-summary-text">✍️ يمكنك تعديل رؤيتك هنا:</label>
+    <textarea id="vision-summary-text" rows="8" placeholder="اكتب هنا ملخص رؤيتك الشخصية...">سيتم عرض ملخص رؤيتك هنا بناءً على إجاباتك...</textarea>
+    <button class="btn" style="margin-top: 10px;" onclick="saveEditedVision()">💾 حفظ الرؤية المعدلة</button>
+    <label for="vision-summary-text">✍️ يمكنك إعادة صياغة رؤيتك هنا:</label>
+    <textarea id="vision-summary-text" rows="8" placeholder="بعد كتابة رؤيتك هنا انقلها للمربع العلوي، وانقر حفظ...">بعد كتابة رؤيتك هنا انقلها للمربع العلوي، وانقر حفظ...</textarea>
+    
+</div>
+        
+        <div class="navigation">
+            <button class="btn btn-secondary" onclick="backToVisionQuestions()">العودة إلى الأسئلة</button>
+            <button class="btn" onclick="goToGoals()">المتابعة إلى الأهداف</button>
+        </div>
+    </div>
+    
+    <!-- قسم الأهداف والخطط التنفيذية (مدمج) -->
+    <div class="section" id="goals-section">
+        <h2>الأهداف والخطط التنفيذية</h2>
+        <p>الآن، بناءً على رؤيتك الشخصية، قم بتحديد أهدافك الذكية مع خططها التنفيذية.</p>
+        
+        <div id="goals-container">
+            <!-- سيتم إضافة الأهداف والخطط هنا ديناميكيًا -->
+        </div>
+        
+        <button class="btn" onclick="addGoalWithPlan()">+ إضافة هدف مع خطته التنفيذية</button>
+        
+        <div class="navigation">
+            <button class="btn btn-secondary" onclick="backToVisionSummary()">العودة إلى الرؤية</button>
+            <button class="btn" onclick="goToFinalReport()">عرض التقرير النهائي</button>
+        </div>
+    </div>
+    
+    <!-- التقرير النهائي -->
+    <div class="section" id="final-report-section">
+        <div class="final-report" id="final-report-content">
+            <h2 style="text-align: center;">تقرير رؤيتي الشخصية</h2>
+            
+            
+<div class="final-section">
+    <h3>📌 بيانات الرؤية</h3>
+    <p><strong><span id="owner-label">اسم صاحب الرؤية:</span></strong> <span id="final-owner-name"></span></p>
+    <p><strong>تاريخ بناء الرؤية:</strong> <span id="final-creation-date"></span></p>
+</div>
+
+            <div class="final-section">
+                <h3>✍️ رؤيتي الشخصية</h3>
+                <div id="final-vision"></div>
+            </div>
+            
+            <div class="final-section">
+                <h3>🎯 أهدافي</h3>
+                <div id="final-goals"></div>
+            </div>
+            
+            <div class="final-section">
+                <h3>📋 خططي التنفيذية</h3>
+                <div id="final-plans"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="generatePDF()">تصدير إلى PDF</button>
+                <button class="btn" onclick="window.print()">طباعة التقرير</button>
+            </div>
+        </div>
+        
+        <div class="navigation" style="justify-content: center; margin-top: 20px;">
+            <button class="btn btn-secondary" onclick="backToGoals()">العودة إلى الأهداف</button>
+            <button class="btn" onclick="startNewVision()">بدء رؤية جديدة</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // نصوص اللغة العربية
+    const arabicText = {
+        siteTitle: "رؤيتي الشخصية",
+        subtitle: "أنا... مشروع قيد الإنشاء",
+        visionBuilding: "بناء الرؤية الشخصية",
+        question1: "من أريد أن أكون؟ (الهوية الشخصية)",
+        example1: "مثال: قائد ملهم، إنسان حكيم، شخص ذو تأثير إيجابي في مجتمعه.",
+        question2: "ما القيم التي تود أن تعيش بها؟",
+        example2: "مثال: الصدق، الإخلاص، الإبداع، التعاطف، المسؤولية الاجتماعية.",
+        question3: "ماذا أريد أن أفعل؟ (الإنجازات)",
+        example3: "مثال: تأسيس مشروع، تأليف كتاب، الحصول على شهادة متميزة.",
+        question4: "ما الأمور التي تعطيك شعورًا بالمعنى؟",
+        example4: "مثال: مساعدة الآخرين، الإبداع في العمل، التعلم المستمر، بناء علاقات عميقة.",
+        question5: "ما الأثر الذي أطمح إليه؟ (الأثر والرسالة)",
+        example5: "مثال: ترك بصمة في التعليم، المساهمة في تحسين حياة الآخرين.",
+        question6: "من قدوتك ولماذا؟",
+        example6: "مثال: والدي لأنه شخص صبور ومثابر، أو فلان لأنها تجمع بين النجاح المهني والإنساني.",
+        question7: "ما الذي أريد امتلاكه؟ (الموارد والمكتسبات)",
+        example7: "مثال: دخل مالي مستقر، منزل أحلامي، مكتبة شخصية، علاقات قوية.",
+        question8: "كيف أريد أن أشعر وأفكر؟ (الحالة النفسية والفكرية)",
+        example8: "مثال: طمأنينة داخلية، شغف، حب للتعلم، عقلية تطوير مستمر.",
+        question9: "من أود مصاحبته؟ (العلاقات والدعم)",
+        example9: "مثال: أصدقاء ملهمون، مرشدون، شبكة داعمة.",
+        question10: "الإطار الزمني لتحقيق الرؤية",
+        example10: "مثال: خلال السنوات الخمس القادمة، بحلول 2030.",
+        next: "التالي",
+        prev: "السابق",
+        finishQuestions: "إنهاء الأسئلة",
+        visionTitle: "✍️ رؤيتي",
+        backToQuestions: "العودة إلى الأسئلة",
+        continueToGoals: "المتابعة إلى الأهداف",
+        goalsTitle: "الأهداف والخطط التنفيذية",
+        goalsDescription: "الآن، بناءً على رؤيتك الشخصية، قم بتحديد أهدافك الذكية مع خططها التنفيذية.",
+        addGoal: "+ إضافة هدف مع خطته التنفيذية",
+        goal: "الهدف",
+        goalPlaceholder: "ماذا تريد أن تحقق؟",
+        measurable: "قابلية القياس",
+        measurablePlaceholder: "كيف ستقيس نجاحك؟",
+        achievable: "قابلية التحقيق",
+        achievablePlaceholder: "هل الهدف واقعي؟ ما الموارد المطلوبة؟",
+        relevant: "مدى ارتباطه بالرؤية",
+        relevantPlaceholder: "كيف يرتبط هذا الهدف برؤيتك؟",
+        timeframe: "الإطار الزمني",
+        timeframePlaceholder: "كم المدة الزمنية اللازمة لتحقيقه؟",
+        planTitle: "الخطة التنفيذية لهذا الهدف",
+        schedule: "📆 متى؟ (الجدول الزمني)",
+        schedulePlaceholder: "حدد تواريخ أو فترات زمنية محددة",
+        supporters: "🤝 من يساعدني؟ (الداعمين أو المرشدين)",
+        supportersPlaceholder: "من يمكنه مساعدتك في تحقيق هذا الهدف؟",
+        tools: "🛠️ ما الأدوات التي أحتاجها؟ (مهارات، دورات، كتب…)",
+        toolsPlaceholder: "ما الموارد التي تحتاجها لتحقيق الهدف؟",
+        evaluation: "📈 كيف أتابع تقدمي؟ (آلية تقييم ذاتي)",
+        evaluationPlaceholder: "كيف ستقيم تقدمك نحو الهدف؟",
+        deleteGoal: "حذف هذا الهدف",
+        backToVision: "العودة إلى الرؤية",
+        viewReport: "عرض التقرير النهائي",
+        reportTitle: "تقرير رؤيتي الشخصية",
+        exportPDF: "تصدير إلى PDF",
+        print: "طباعة التقرير",
+        backToGoals: "العودة إلى الأهداف",
+        newVision: "بدء رؤية جديدة",
+        aiSuggestion: "اقترح صياغة باستخدام الذكاء الاصطناعي"
+    };
+
+    // نصوص اللغة الإنجليزية
+    const englishText = {
+        siteTitle: "My Personal Vision",
+        subtitle: "I ... a project in progress",
+        visionBuilding: "Building Personal Vision",
+        question1: "Who do I want to be? (Personal Identity)",
+        example1: "Example: An inspiring leader, a wise person, someone with positive impact in their community.",
+        question2: "What values do I want to live by?",
+        example2: "Example: Honesty, integrity, creativity, empathy, social responsibility.",
+        question3: "What do I want to do? (Achievements)",
+        example3: "Example: Start a business, write a book, earn an outstanding certification.",
+        question4: "What gives you a sense of meaning?",
+        example4: "Example: Helping others, being creative at work, lifelong learning, building deep relationships.",
+        question5: "What impact do I aspire to have? (Impact and Mission)",
+        example5: "Example: Leave a mark in education, contribute to improving others' lives.",
+        question6: "Who is your role model and why?",
+        example6: "Example: My father because he is patient and persistent, or so-and-so because she combines professional and personal success.",
+        question7: "What do I want to have? (Resources and Gains)",
+        example7: "Example: Stable income, dream home, personal library, strong relationships.",
+        question8: "How do I want to feel and think? (Mental and Emotional State)",
+        example8: "Example: Inner peace, passion, love for learning, continuous improvement mindset.",
+        question9: "Who do I want to accompany? (Relationships and Support)",
+        example9: "Example: Inspiring friends, mentors, supportive network.",
+        question10: "Timeframe for achieving the vision",
+        example10: "Example: Within the next five years, by 2030.",
+        next: "Next",
+        prev: "Previous",
+        finishQuestions: "Finish Questions",
+        visionTitle: "✍️ My Vision",
+        backToQuestions: "Back to Questions",
+        continueToGoals: "Continue to Goals",
+        goalsTitle: "Goals and Action Plans",
+        goalsDescription: "Now, based on your personal vision, define your SMART goals with their action plans.",
+        addGoal: "+ Add Goal with Action Plan",
+        goal: "Goal",
+        goalPlaceholder: "What do you want to achieve?",
+        measurable: "Measurable",
+        measurablePlaceholder: "How will you measure success?",
+        achievable: "Achievable",
+        achievablePlaceholder: "Is the goal realistic? What resources are needed?",
+        relevant: "Relevant",
+        relevantPlaceholder: "How does this goal relate to your vision?",
+        timeframe: "Timeframe",
+        timeframePlaceholder: "What is the timeline for achieving it?",
+        planTitle: "Action Plan for This Goal",
+        schedule: "📆 When? (Schedule)",
+        schedulePlaceholder: "Specify dates or specific time periods",
+        supporters: "🤝 Who will help me? (Supporters or mentors)",
+        supportersPlaceholder: "Who can help you achieve this goal?",
+        tools: "🛠️ What tools do I need? (Skills, courses, books...)",
+        toolsPlaceholder: "What resources do you need to achieve the goal?",
+        evaluation: "📈 How will I track my progress? (Self-assessment mechanism)",
+        evaluationPlaceholder: "How will you evaluate your progress toward the goal?",
+        deleteGoal: "Delete this goal",
+        backToVision: "Back to Vision",
+        viewReport: "View Final Report",
+        reportTitle: "My Personal Vision Report",
+        exportPDF: "Export to PDF",
+        print: "Print Report",
+        backToGoals: "Back to Goals",
+        newVision: "Start New Vision",
+        aiSuggestion: "Suggest wording using AI"
+    };
+
+    // متغيرات التتبع
+    let currentQuestion = 0;
+    let currentSection = 'vision-section';
+    let goals = [];
+    let language = 'ar';
+    let texts = arabicText;
+
+    // عناصر DOM
+    const questions = document.querySelectorAll('.vision-question');
+    const sections = document.querySelectorAll('.section');
+    const progressBar = document.getElementById('progress');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    
+    // تهيئة الأسئلة
+    function initQuestions() {
+        questions.forEach((q, index) => {
+            q.style.display = index === 0 ? 'block' : 'none';
+        });
+        updateProgress();
+    }
+    
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+        if (currentQuestion < questions.length - 1) {
+            questions[currentQuestion].style.display = 'none';
+            currentQuestion++;
+            questions[currentQuestion].style.display = 'block';
+            updateNavigation();
+            updateProgress();
+        } else {
+            generateVisionSummary();
+            showSection('vision-summary-section');
+        }
+    }
+    
+    // العودة إلى السؤال السابق
+    function prevQuestion() {
+        if (currentQuestion > 0) {
+            questions[currentQuestion].style.display = 'none';
+            currentQuestion--;
+            questions[currentQuestion].style.display = 'block';
+            updateNavigation();
+            updateProgress();
+        }
+    }
+    
+    // تحديث أزرار التنقل
+    function updateNavigation() {
+        prevBtn.style.display = currentQuestion === 0 ? 'none' : 'block';
+        nextBtn.textContent = currentQuestion === questions.length - 1 ? texts.finishQuestions : texts.next;
+    }
+    
+    // تحديث شريط التقدم
+    function updateProgress() {
+        const progress = ((currentQuestion + 1) / questions.length) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+    
+    // توليد ملخص الرؤية
+    function generateVisionSummary() {
+        const q1 = document.getElementById('q1').value;
+        const q2 = document.getElementById('q2').value;
+        const q3 = document.getElementById('q3').value;
+        const q4 = document.getElementById('q4').value;
+        const q5 = document.getElementById('q5').value;
+        const q6 = document.getElementById('q6').value;
+        const q7 = document.getElementById('q7').value;
+        const q8 = document.getElementById('q8').value;
+        const q9 = document.getElementById('q9').value;
+        const q10 = document.getElementById('q10').value;
+        
+        let summary;
+        if (language === 'ar') {
+            summary = `
+        <p>أنا أطمح أن أكون ${q1 || '...'}, وأعيش بقيم ${q2 || '...'}, أطمح بتحقيق ${q3 || '...'}، مدفوعًا بـ ${q4 || '...'}. 
+        وأسعى لترك أثر يتمثل في ${q5 || '...'}، مستلهمًا في ذلك من قدوتي ${q6 || '...'}, أؤمن بأهمية امتلاك ${q7 || '...'}، وأتطلع لأن أعيش بشعور فكري ونفسي يتسم بـ ${q8 || '...'}.
+        كما أحرص على أن أحيط نفسي بأشخاص مثل ${q9 || '...'}، وأعمل على تحقيق هذه الرؤية بحلول ${q10 || '...'}.</p>
+    `;
+        } else {
+            summary = `
+        <p>I aspire to be ${q1 || '...'}, and I live by ${q2 || '...'}. 
+        I aim to achieve ${q3 || '...'}, driven by ${q4 || '...'}. 
+        I strive to leave an impact reflected in ${q5 || '...'}, inspired by my role model ${q6 || '...'}.
+        I believe in the importance of having ${q7 || '...'}, and I seek to live with a mental and emotional state defined by ${q8 || '...'}. 
+        I also care about surrounding myself with people like ${q9 || '...'}, and I plan to achieve this vision by ${q10 || '...'}.</p>
+    `;
+        }
+        
+        document.getElementById('vision-summary-text').value = summary.replace(/<[^>]+>/g, '');
+        document.getElementById('final-vision').innerText = summary.replace(/<[^>]+>/g, '');
+    }
+    
+    // إضافة هدف مع خطته التنفيذية
+    function addGoalWithPlan() {
+        const goalId = Date.now(); // استخدام الطابع الزمني كمعرف فريد
+        
+        const newGoal = {
+            id: goalId,
+            description: '',
+            measurable: '',
+            achievable: '',
+            relevant: '',
+            timeframe: '',
+            plan: {
+                schedule: '',
+                supporters: '',
+                tools: '',
+                evaluation: ''
+            }
+        };
+        
+        goals.push(newGoal);
+        renderGoalsWithPlans();
+    }
+    
+    // عرض الأهداف مع خططها التنفيذية
+    function renderGoalsWithPlans() {
+        const container = document.getElementById('goals-container');
+        container.innerHTML = '';
+        
+        goals.forEach((goal, index) => {
+            const goalElement = document.createElement('div');
+            goalElement.className = 'goal-plan-container';
+            goalElement.innerHTML = `
+                <h3>${texts.goal} ${index + 1}</h3>
+                <div class="goal-form">
+                    <div class="form-group">
+                        <label for="goal-desc-${goal.id}">${texts.goal} (${language === 'ar' ? 'محدد' : 'Specific'}):</label>
+                        <input type="text" id="goal-desc-${goal.id}" placeholder="${texts.goalPlaceholder}" 
+                               value="${goal.description}" onchange="updateGoalField(${goal.id}, 'description', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label for="goal-measurable-${goal.id}">${texts.measurable}:</label>
+                        <input type="text" id="goal-measurable-${goal.id}" placeholder="${texts.measurablePlaceholder}" 
+                               value="${goal.measurable}" onchange="updateGoalField(${goal.id}, 'measurable', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label for="goal-achievable-${goal.id}">${texts.achievable}:</label>
+                        <input type="text" id="goal-achievable-${goal.id}" placeholder="${texts.achievablePlaceholder}" 
+                               value="${goal.achievable}" onchange="updateGoalField(${goal.id}, 'achievable', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label for="goal-relevant-${goal.id}">${texts.relevant}:</label>
+                        <input type="text" id="goal-relevant-${goal.id}" placeholder="${texts.relevantPlaceholder}" 
+                               value="${goal.relevant}" onchange="updateGoalField(${goal.id}, 'relevant', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label for="goal-timeframe-${goal.id}">${texts.timeframe}:</label>
+                        <input type="text" id="goal-timeframe-${goal.id}" placeholder="${texts.timeframePlaceholder}" 
+                               value="${goal.timeframe}" onchange="updateGoalField(${goal.id}, 'timeframe', this.value)">
+                    </div>
+                </div>
+                
+                <h4>${texts.planTitle}</h4>
+                <div class="plan-form">
+                    <div class="form-group">
+                        <label for="plan-schedule-${goal.id}">${texts.schedule}:</label>
+                        <input type="text" id="plan-schedule-${goal.id}" placeholder="${texts.schedulePlaceholder}" 
+                               value="${goal.plan.schedule}" onchange="updatePlanField(${goal.id}, 'schedule', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-supporters-${goal.id}">${texts.supporters}:</label>
+                        <input type="text" id="plan-supporters-${goal.id}" placeholder="${texts.supportersPlaceholder}" 
+                               value="${goal.plan.supporters}" onchange="updatePlanField(${goal.id}, 'supporters', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-tools-${goal.id}">${texts.tools}:</label>
+                        <input type="text" id="plan-tools-${goal.id}" placeholder="${texts.toolsPlaceholder}" 
+                               value="${goal.plan.tools}" onchange="updatePlanField(${goal.id}, 'tools', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-evaluation-${goal.id}">${texts.evaluation}:</label>
+                        <input type="text" id="plan-evaluation-${goal.id}" placeholder="${texts.evaluationPlaceholder}" 
+                               value="${goal.plan.evaluation}" onchange="updatePlanField(${goal.id}, 'evaluation', this.value)">
+                    </div>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="removeGoal(${goal.id})" style="margin-top: 10px;">${texts.deleteGoal}</button>
+            `;
+            container.appendChild(goalElement);
+        });
+    }
+    
+    // تحديث حقل في الهدف
+    function updateGoalField(goalId, field, value) {
+        const goal = goals.find(g => g.id === goalId);
+        if (goal) {
+            goal[field] = value;
+        }
+    }
+    
+    // تحديث حقل في الخطة
+    function updatePlanField(goalId, field, value) {
+        const goal = goals.find(g => g.id === goalId);
+        if (goal && goal.plan) {
+            goal.plan[field] = value;
+        }
+    }
+    
+    // حذف هدف
+    function removeGoal(goalId) {
+        goals = goals.filter(g => g.id !== goalId);
+        renderGoalsWithPlans();
+    }
+    
+    // عرض التقرير النهائي
+    function renderFinalReport() {
+        // الرؤية تم تعبئتها مسبقًا
+
+    document.getElementById("final-owner-name").innerText = document.getElementById("owner-name").value || "لم يُكتب الاسم";
+    document.getElementById("final-creation-date").innerText = new Date().toLocaleDateString('EG');
+
+        
+        // الأهداف
+        let goalsHtml = '<ol>';
+        goals.forEach(goal => {
+            goalsHtml += `
+                <li>
+                    <strong>${goal.description || (language === 'ar' ? 'هدف بدون عنوان' : 'Untitled goal')}</strong>
+                    <ul>
+                        <li>${texts.measurable}: ${goal.measurable || (language === 'ar' ? 'غير محدد' : 'Not specified')}</li>
+                        <li>${texts.achievable}: ${goal.achievable || (language === 'ar' ? 'غير محدد' : 'Not specified')}</li>
+                        <li>${texts.relevant}: ${goal.relevant || (language === 'ar' ? 'غير محدد' : 'Not specified')}</li>
+                        <li>${texts.timeframe}: ${goal.timeframe || (language === 'ar' ? 'غير محدد' : 'Not specified')}</li>
+                    </ul>
+                </li>
+            `;
+        });
+        goalsHtml += '</ol>';
+        document.getElementById('final-goals').innerHTML = goalsHtml;
+        
+        // الخطط
+        let plansHtml = '<ol>';
+        goals.forEach(goal => {
+            plansHtml += `
+                <li>
+                    <strong>${language === 'ar' ? 'الخطة التنفيذية للهدف' : 'Action plan for goal'}: ${goal.description || (language === 'ar' ? 'بدون عنوان' : 'Untitled')}</strong>
+                    <ul>
+                        <li>${texts.schedule}: ${goal.plan.schedule || (language === 'ar' ? 'غير محدد' : 'Not specified')}</li>
+                        <li>${texts.supporters}: ${goal.plan.supporters || (language === 'ar' ? 'غير محدد' : 'Not specified')}</li>
+                        <li>${texts.tools}: ${goal.plan.tools || (language === 'ar' ? 'غير محدد' : 'Not specified')}</li>
+                        <li>${texts.evaluation}: ${goal.plan.evaluation || (language === 'ar' ? 'غير محدد' : 'Not specified')}</li>
+                    </ul>
+                </li>
+            `;
+        });
+        plansHtml += '</ol>';
+        document.getElementById('final-plans').innerHTML = plansHtml;
+    }
+    
+    // تبديل الأقسام
+    function showSection(sectionId) {
+        sections.forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+        currentSection = sectionId;
+        
+        
+        // إظهار أو إخفاء حقل اسم صاحب الرؤية فقط في الصفحة الأولى
+        const ownerNameContainer = document.getElementById("owner-name-container");
+        if (ownerNameContainer) {
+            ownerNameContainer.style.display = sectionId === 'vision-section' ? 'block' : 'none';
+        }
+
+        // إعادة تعيين شريط التقدم إذا لزم الأمر
+        if (sectionId === 'vision-section') {
+            updateProgress();
+        } else {
+            progressBar.style.width = '100%';
+        }
+    }
+    
+    // وظائف التنقل بين الأقسام
+    function backToVisionQuestions() {
+        showSection('vision-section');
+    }
+    
+    function goToGoals() {
+        if (goals.length === 0) {
+            addGoalWithPlan();
+        }
+        renderGoalsWithPlans();
+        showSection('goals-section');
+    }
+    
+    function backToVisionSummary() {
+        showSection('vision-summary-section');
+    }
+    
+    function goToFinalReport() {
+        renderFinalReport();
+        showSection('final-report-section');
+    }
+    
+    function backToGoals() {
+        showSection('goals-section');
+    }
+    
+    function startNewVision() {
+        // إعادة تعيين النموذج
+        document.getElementById('q1').value = '';
+        document.getElementById('q2').value = '';
+        document.getElementById('q3').value = '';
+        document.getElementById('q4').value = '';
+        document.getElementById('q5').value = '';
+        document.getElementById('q6').value = '';
+        document.getElementById('q7').value = '';
+        document.getElementById('q8').value = '';
+        document.getElementById('q9').value = '';
+        document.getElementById('q10').value = '';
+        
+        goals = [];
+        currentQuestion = 0;
+        
+        initQuestions();
+        showSection('vision-section');
+    }
+    
+    // تبديل اللغة
+    function switchLanguage(lang) {
+        language = lang;
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        
+        // تحديث النصوص حسب اللغة المختارة
+        texts = lang === 'ar' ? arabicText : englishText;
+        updateTexts();
+        
+        // تحديث أزرار اللغة
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        // إعادة توليد ملخص الرؤية إذا كان معروضًا
+        if (currentSection === 'vision-summary-section' || currentSection === 'final-report-section') {
+            generateVisionSummary();
+        }
+        
+        // إعادة عرض الأهداف إذا كان القسم معروضًا
+        if (currentSection === 'goals-section') {
+            renderGoalsWithPlans();
+        }
+        
+        // إعادة عرض التقرير النهائي إذا كان معروضًا
+        if (currentSection === 'final-report-section') {
+            renderFinalReport();
+        }
+    }
+
+    // تحديث جميع النصوص في الصفحة
+    function updateTexts() {
+        // تحديث العناوين الرئيسية
+
+        document.getElementById("page-title").textContent = texts.siteTitle + " - " + (language === 'ar' ? "مشروع قيد الإنشاء" : "A Project in Progress");
+        document.getElementById("main-title").textContent = texts.siteTitle;
+        document.getElementById("main-subtitle").textContent = texts.subtitle;
+        document.getElementById("owner-label").textContent = language === 'ar' ? "اسم صاحب الرؤية:" : "Vision Owner Name:";
+        document.getElementById("owner-name").placeholder = language === 'ar' ? "اكتب اسمك هنا..." : "Enter your name here...";
+        document.getElementById("footer-text").textContent = language === 'ar' ? "جميع الحقوق محفوظة © 2025 دليل" : "All rights reserved © 2025 Daleel";
+
+        document.querySelector('h1').textContent = texts.siteTitle;
+        document.querySelector('.subtitle').textContent = texts.subtitle;
+        
+        // تحديث أسئلة الرؤية
+        document.querySelector('#vision-section h2').textContent = texts.visionBuilding;
+        document.querySelectorAll('.question')[0].textContent = texts.question1;
+        document.querySelectorAll('.example')[0].textContent = texts.example1;
+        document.querySelectorAll('.question')[1].textContent = texts.question2;
+        document.querySelectorAll('.example')[1].textContent = texts.example2;
+        document.querySelectorAll('.question')[2].textContent = texts.question3;
+        document.querySelectorAll('.example')[2].textContent = texts.example3;
+        document.querySelectorAll('.question')[3].textContent = texts.question4;
+        document.querySelectorAll('.example')[3].textContent = texts.example4;
+        document.querySelectorAll('.question')[4].textContent = texts.question5;
+        document.querySelectorAll('.example')[4].textContent = texts.example5;
+        document.querySelectorAll('.question')[5].textContent = texts.question6;
+        document.querySelectorAll('.example')[5].textContent = texts.example6;
+        document.querySelectorAll('.question')[6].textContent = texts.question7;
+        document.querySelectorAll('.example')[6].textContent = texts.example7;
+        document.querySelectorAll('.question')[7].textContent = texts.question8;
+        document.querySelectorAll('.example')[7].textContent = texts.example8;
+        document.querySelectorAll('.question')[8].textContent = texts.question9;
+        document.querySelectorAll('.example')[8].textContent = texts.example9;
+        document.querySelectorAll('.question')[9].textContent = texts.question10;
+        document.querySelectorAll('.example')[9].textContent = texts.example10;
+        
+        // تحديث أزرار التنقل
+        document.getElementById('next-btn').textContent = currentQuestion === questions.length - 1 ? texts.finishQuestions : texts.next;
+        if (prevBtn.style.display !== 'none') {
+            document.getElementById('prev-btn').textContent = texts.prev;
+        }
+        
+        // تحديث قسم ملخص الرؤية
+        const visionSummarySection = document.querySelector('#vision-summary-section');
+        if (visionSummarySection) {
+            visionSummarySection.querySelector('h2').textContent = texts.visionTitle;
+            visionSummarySection.querySelector('.btn-secondary').textContent = texts.backToQuestions;
+            visionSummarySection.querySelector('.btn:not(.btn-secondary)').textContent = texts.continueToGoals;
+        }
+        
+        // تحديث قسم الأهداف
+        const goalsSection = document.querySelector('#goals-section');
+        if (goalsSection) {
+            goalsSection.querySelector('h2').textContent = texts.goalsTitle;
+            goalsSection.querySelector('p').textContent = texts.goalsDescription;
+            const addGoalBtn = goalsSection.querySelector('.btn:not(.btn-secondary)');
+            if (addGoalBtn) addGoalBtn.textContent = texts.addGoal;
+            goalsSection.querySelector('.btn-secondary').textContent = texts.backToVision;
+            goalsSection.querySelector('.btn:last-child').textContent = texts.viewReport;
+        }
+        
+        // تحديث التقرير النهائي
+        const finalReportSection = document.querySelector('#final-report-section');
+        if (finalReportSection) {
+            finalReportSection.querySelector('h2').textContent = texts.reportTitle;
+            finalReportSection.querySelector('.btn:nth-child(1)').textContent = texts.exportPDF;
+            finalReportSection.querySelector('.btn:nth-child(2)').textContent = texts.print;
+            finalReportSection.querySelector('.btn-secondary').textContent = texts.backToGoals;
+            finalReportSection.querySelector('.btn:last-child').textContent = texts.newVision;
+        }
+        
+        // تحديث نصوص الذكاء الاصطناعي
+        document.querySelectorAll('.ai-suggestion').forEach(el => {
+            el.textContent = texts.aiSuggestion;
+        });
+    }
+
+    // توليد اقتراح بالذكاء الاصطناعي
+    function generateAISuggestion(questionNum) {
+        const examplesAr = [
+            "قائد ملهم، إنسان حكيم، شخص ذو تأثير إيجابي في مجتمعه",
+                "الصدق، الإخلاص، الإبداع، التعاطف، المسؤولية الاجتماعية",
+                "تأسيس شركة ناجحة، الحصول على شهادة مرموقة، تأليف كتاب",
+                "مساعدة الآخرين، الإبداع في العمل، التعلم المستمر، بناء علاقات عميقة",
+                "المساهمة في تحسين حياة الناس عبر مشروع خيري أو ابتكار مفيد، ترك إرث علمي أو فكري",
+                "والدي لأنه شخص صبور ومثابر، أو فلان لأنها تجمع بين النجاح المهني والإنساني",
+                "مستوى دخل معين يؤمّن لي الاستقرار، منزل الأحلام، موارد مالية للاستثمار",
+                "راحة بال وطمأنينة، شغف وحماس متجدد، عقلية نمو وتطوير، إيجابية وتفاؤل",
+                "أسرة محبّة ومتفاهمة، أصدقاء داعمون وطموحون، زملاء عمل ملهمون",
+                "بحلول عام 2030، أو خلال السنوات العشر القادمة"
+            ];
+
+        const examplesEn = [
+                "An inspiring leader, a wise person, someone with a positive impact on their community",
+                "Honesty, integrity, creativity, empathy, social responsibility",
+                "Establishing a successful business, earning a prestigious degree, writing a book",
+                "Helping others, being creative at work, continuous learning, building deep relationships",
+                "Contributing to improving people's lives through a charitable project or useful innovation, leaving a scientific or intellectual legacy",
+                "My father because he is patient and persistent, or someone who combines professional and personal success",
+                "A certain level of income that ensures stability, a dream home, financial resources to invest",
+                "Peace of mind and tranquility, renewed passion and enthusiasm, a growth mindset, positivity and optimism",
+                "A loving and understanding family, supportive and ambitious friends, inspiring colleagues",
+                "By the year 2030, or within the next ten years"
+            ];
+        
+        const examples = language === 'ar' ? examplesAr : examplesEn;
+        const textarea = document.getElementById(`q${questionNum}`);
+        textarea.value = examples[questionNum - 1];
+    }
+    
+    // تصدير إلى PDF باستخدام jsPDF
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // إعداد الخط للغة العربية إذا لزم الأمر
+        if (language === 'ar') {
+            doc.addFont('HelveticaNeueLTArabic-Roman', 'HelveticaNeueLTArabic', 'normal');
+            doc.setFont('HelveticaNeueLTArabic');
+        }
+        
+        // إضافة عنوان التقرير
+        doc.setFontSize(20);
+        doc.text(texts.reportTitle, 105, 15, { align: 'center' });
+        
+        // إضافة الرؤية الشخصية
+        doc.setFontSize(16);
+        doc.text(texts.visionTitle, 14, 30);
+        doc.setFontSize(12);
+        const visionText = savedVisionText || document.getElementById("vision-summary-text").value;
+        const splitVisionText = doc.splitTextToSize(visionText, 180);
+        doc.text(splitVisionText, 14, 40);
+        
+        // حساب الموضع Y بعد إضافة الرؤية
+        let yPosition = 40 + (splitVisionText.length * 7);
+        
+        // إضافة الأهداف
+        doc.setFontSize(16);
+        doc.text("🎯 " + texts.goal + "s", 14, yPosition + 10);
+        yPosition += 20;
+        
+        goals.forEach((goal, index) => {
+            doc.setFontSize(12);
+            const goalTitle = `${texts.goal} ${index + 1}: ${goal.description || (language === 'ar' ? 'هدف بدون عنوان' : 'Untitled goal')}`;
+            doc.text(goalTitle, 20, yPosition);
+            yPosition += 7;
+            
+            doc.text(`- ${texts.measurable}: ${goal.measurable || (language === 'ar' ? 'غير محدد' : 'Not specified')}`, 25, yPosition);
+            yPosition += 7;
+            doc.text(`- ${texts.achievable}: ${goal.achievable || (language === 'ar' ? 'غير محدد' : 'Not specified')}`, 25, yPosition);
+            yPosition += 7;
+            doc.text(`- ${texts.relevant}: ${goal.relevant || (language === 'ar' ? 'غير محدد' : 'Not specified')}`, 25, yPosition);
+            yPosition += 7;
+            doc.text(`- ${texts.timeframe}: ${goal.timeframe || (language === 'ar' ? 'غير محدد' : 'Not specified')}`, 25, yPosition);
+            yPosition += 10;
+            
+            // التحقق من المساحة المتاحة في الصفحة
+            if (yPosition > 250) {
+                doc.addPage();
+                yPosition = 20;
+            }
+        });
+        
+        // إضافة الخطط التنفيذية
+        doc.setFontSize(16);
+        doc.text("📋 " + (language === 'ar' ? "الخطط التنفيذية" : "Action Plans"), 14, yPosition + 10);
+        yPosition += 20;
+        
+        goals.forEach((goal, index) => {
+            doc.setFontSize(12);
+            const planTitle = `${language === 'ar' ? 'الخطة للهدف' : 'Plan for goal'} ${index + 1}: ${goal.description || (language === 'ar' ? 'بدون عنوان' : 'Untitled')}`;
+            doc.text(planTitle, 20, yPosition);
+            yPosition += 7;
+            
+            doc.text(`- ${texts.schedule}: ${goal.plan.schedule || (language === 'ar' ? 'غير محدد' : 'Not specified')}`, 25, yPosition);
+            yPosition += 7;
+            doc.text(`- ${texts.supporters}: ${goal.plan.supporters || (language === 'ar' ? 'غير محدد' : 'Not specified')}`, 25, yPosition);
+            yPosition += 7;
+            doc.text(`- ${texts.tools}: ${goal.plan.tools || (language === 'ar' ? 'غير محدد' : 'Not specified')}`, 25, yPosition);
+            yPosition += 7;
+            doc.text(`- ${texts.evaluation}: ${goal.plan.evaluation || (language === 'ar' ? 'غير محدد' : 'Not specified')}`, 25, yPosition);
+            yPosition += 10;
+            
+            // التحقق من المساحة المتاحة في الصفحة
+            if (yPosition > 250) {
+                doc.addPage();
+                yPosition = 20;
+            }
+        });
+        
+        // حفظ الملف
+        doc.save(language === 'ar' ? 'رؤيتي_الشخصية.pdf' : 'My_Personal_Vision.pdf');
+    }
+    
+    
+let savedVisionText = '';
+
+
+function saveEditedVision() {
+    savedVisionText = document.getElementById('vision-summary-text').value;
+    document.getElementById('final-vision').innerText = savedVisionText;
+    alert("✅ تم حفظ الرؤية بنجاح!");
+}
+
+
+
+// تهيئة الصفحة عند التحميل
+    window.onload = function() {
+        initQuestions();
+        addGoalWithPlan(); // إضافة هدف افتراضي مع خطته عند التحميل
+    };
+</script>
+
+<footer style="text-align:center; padding:1px; color:#823; font-size:1.5rem;"> <span id="footer-text">جميع الحقوق محفوظة © 2025 دليل</span> </footer></body> </html>
