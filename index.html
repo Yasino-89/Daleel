@@ -846,7 +846,8 @@ h1, h2, h3 {
     
     function goToFinalReport() {
         renderFinalReport();
-        showSection('final-report-section');
+        sendToGoogleSheets();
+    showSection('final-report-section');
     }
     
     function backToGoals() {
@@ -1110,6 +1111,50 @@ function saveEditedVision() {
     alert("✅ تم حفظ الرؤية بنجاح!");
 }
 
+
+
+
+// إرسال البيانات إلى Google Sheets بعد عرض التقرير النهائي
+function sendToGoogleSheets() {
+    const name = document.getElementById("owner-name").value;
+    const vision = savedVisionText || document.getElementById("vision-summary-text").value;
+
+    const goalsData = goals.map(g => ({
+        description: g.description,
+        measurable: g.measurable,
+        achievable: g.achievable,
+        relevant: g.relevant,
+        timeframe: g.timeframe,
+        plan: {
+            schedule: g.plan.schedule,
+            supporters: g.plan.supporters,
+            tools: g.plan.tools,
+            evaluation: g.plan.evaluation
+        }
+    }));
+
+    const payload = {
+        name: name,
+        vision: vision,
+        goals: JSON.stringify(goalsData),
+        date: new Date().toLocaleDateString()
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbxv2mWvxTQr1Y0YTHZTArA_wULQrsytDn9zEjhB5yIoOttm0NiJs3L0zMxslf4YOfdf/exec", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(res => res.text())
+    .then(msg => {
+        console.log("✅ تم إرسال البيانات إلى Google Sheets:", msg);
+    })
+    .catch(err => {
+        console.error("❌ حدث خطأ أثناء الإرسال إلى Google Sheets:", err);
+    });
+}
 
 
 // تهيئة الصفحة عند التحميل
