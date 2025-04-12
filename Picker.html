@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎭 من هو؟</title>
+  <style>
+    @font-face {
+      font-family: 'HelveticaNeueLTArabic';
+      src: url('HelveticaNeueLTArabic-Roman.ttf') format('truetype');
+    }
+
+    body {
+      font-family: 'HelveticaNeueLTArabic', sans-serif;
+      background: linear-gradient(to bottom right, #f0f0f0, #dfe9f3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 25px;
+      font-size: 18px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    .result, .hint {
+      margin-top: 20px;
+      font-size: 24px;
+      padding: 25px;
+      background-color: #ffffff;
+      border: 2px dashed #aaa;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      color: #34495e;
+    }
+    .hint {
+      color: #888;
+      font-size: 22px;
+    }
+    .chosen-list {
+      margin-top: 30px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .chosen-list h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: #2c3e50;
+    }
+    .chosen-list ul {
+      list-style-type: none;
+      padding: 0;
+      text-align: right;
+    }
+    .chosen-list li {
+      margin: 5px 0;
+      font-size: 18px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎭 من المشارك المختار؟</h1>
+  <button onclick="showHint()">✨ اختر المشارك</button>
+  <button onclick="showName()">👤 كشف الاسم</button>
+
+  <div class="hint" id="hint">👀 اضغط على الزر لعرض تلميح</div>
+  <div class="result" id="result">🕵️‍♂️ الاسم لم يُكشف بعد</div>
+
+  <div class="chosen-list">
+    <h3>✅ المشاركون الذين تم اختيارهم:</h3>
+    <ul id="chosenNames"></ul>
+  </div>
+
+  <script>
+    let participants = [
+      { name: "نورة محمد", hint: "لما تطفي كل الضواو… تضل هي واضحة .. مفيدة بالليل" },
+      { name: "يمنى محمد", hint: "لو دخلت من الباب اليمين… هي أول وحدة تشوفها .. وفيها بركة" },
+      { name: "محمد عيسى", hint: "اسمين من أفضل البشر .. والتاريخ بدأ يتسجل من عندهم" },
+      { name: "عبدالله سلامة", hint: "اذا حبيت تصمم اشي ثلاثي الأبعاد بتروحله ، والنشامى ما منهم ....ـة" },
+      { name: "عبدالرحمن دولة", hint: "اسمه في فخامة واشي رسمي ... بس بنفس الوقت اسمه في أمان واطمئنان " },
+      { name: "أنس القصاص", hint: "ما بتحس بالملل بوجوده .. والحكاوي ما بتنتهي عنده" },
+      { name: "عبدالفتاح حزوري", hint: "أوله باب مفتوح وآخره لغز مقفول .. لغز ما حد بيحله ... بس هو بيحل كل الألغاز" },
+      { name: "حمزة الجمل", hint: "مستعد ما يشرب طول الورشة عادي، وبيذكرك بسيد الشهداء" },
+      { name: "ريم بابكر", hint: "أول خليفة .. ومدينة عربية .. بس لازم الصبح بدري قبل ما يصحى الغزال" },
+      { name: "فاطمة دولة", hint: "انها بين الفاء والتاء ... بروتوكول وقرار واستقرار" },
+      { name: "مها عبدالعال", hint: "أكيد تلاقيها بالمرتفعات .. آيم شور شي ول بي ذير" },
+      { name: "آلاء أبوحميد", hint: "نعم ربنا ما بنقدر نحصيها ... والشكر على هذي النعم عندها ما بيتوقف" },
+      { name: "شهد حسين", hint: "لو سألنا النحل أكيد بيدلنا ... على سيد شباب أهل الجنة" },
+      { name: "سارة عطية", hint: "ما بتنبسط لحالها، بتحب تبسط غيرها وتجيبلهم هدايا" },
+      { name: "آية محمد إدريس", hint: "بين الاعجاز والحكمة ... موجود أعظم البشر ..." },
+      { name: "إسراء رضا", hint: "تمشي بالليل مرتاحة البال ... بس أثرها يبني أجيال" }
+    ];
+
+    let selected = null;
+    let chosenList = [];
+
+    function showHint() {
+      if (participants.length === 0) {
+        document.getElementById('hint').innerHTML = "✅ تم اختيار جميع المشاركين!";
+        document.getElementById('result').innerHTML = "🎉 الورشة اكتملت، ما بقي حدا نخوّفه!";
+        return;
+      }
+      const index = Math.floor(Math.random() * participants.length);
+      selected = participants[index];
+      participants.splice(index, 1);
+      document.getElementById('hint').innerHTML = `🧩 تلميح: ${selected.hint}`;
+      document.getElementById('result').innerHTML = `🕵️‍♂️ الاسم لم يُكشف بعد`;
+    }
+
+    function showName() {
+      if (selected) {
+        document.getElementById('result').innerHTML = `🎉 تم اختيار: <strong>${selected.name}</strong>`;
+        chosenList.push(selected.name);
+        updateChosenList();
+        selected = null;
+      } else {
+        document.getElementById('result').innerHTML = `🕵️‍♂️ اختر تلميحًا أولاً!`;
+      }
+    }
+
+    function updateChosenList() {
+      const ul = document.getElementById('chosenNames');
+      ul.innerHTML = '';
+      chosenList.forEach(name => {
+        const li = document.createElement('li');
+        li.textContent = name;
+        ul.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
