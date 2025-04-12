@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقات هيئات الوقوف</title>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.03);
+        }
+        .card-text {
+            font-size: 18px;
+            color: #444;
+            display: none;
+        }
+        .card.revealed .card-text {
+            display: block;
+        }
+        .card.revealed::before {
+            content: "\1F449 اضغط لتغيير البطاقة";
+            display: block;
+            margin-bottom: 10px;
+            color: #999;
+        }
+        .card::before {
+            content: "🎴 اضغط للكشف";
+            font-size: 16px;
+            color: #aaa;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>بطاقات هيئات الوقوف</h1>
+    <div class="card-grid">
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text">🪨 تقف كأنك صخرة: قدمان متلاصقتان، أكتاف مشدودة، نظرات أرضية</div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text">🎋 تقف كأنك خيزرانة: قدمان ثابتتان، كتفان مسترخيتان، نظرات للأمام</div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text">👖 يداك في جيبك طوال الوقت </div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text">🤯 تضع يدًا على رأسك وأنت تتحدث!</div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text">🪑 تتشبث بالمنصة أو الطاولة أمامك</div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text">🦶 تقف على قدم واحدة أو تغير وزنك باستمرار</div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text">🙅‍♂️ تتضم ذراعيك أمام صدرك وأنت تتكلم</div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text">🧍‍♂️ وقفة واثقة: استقامة، توازن، نظرات مباشرة</div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text"> مدرب يشعر بالتعب لكنه يحاول التماسك</div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text"> هيئة مائلة للأمام بزيادة.</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(card) {
+            card.classList.toggle('revealed');
+        }
+    </script>
+</body>
+</html>
