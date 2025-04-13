@@ -4,64 +4,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بطاقات هيئات الوقوف</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-       @font-face {
-    font-family: 'HelveticaNeueLTArabic';
-    src: url('HelveticaNeueLTArabic-Roman.ttf') format('truetype');
-}
+        @font-face {
+            font-family: 'HelveticaNeueLTArabic';
+            src: url('HelveticaNeueLTArabic-Roman.ttf') format('truetype');
+        }
 
-body {
-    font-family: 'HelveticaNeueLTArabic', sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-}
+        body {
+            font-family: 'HelveticaNeueLTArabic', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e0e9f5 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            min-height: 100vh;
+        }
 
         h1 {
-            color: #333;
-            margin-bottom: 20px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            position: relative;
         }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 25%;
+            background: #4a6fa5;
+            border-radius: 2px;
+        }
+
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 25px;
             max-width: 1000px;
             width: 100%;
+            margin-top: 20px;
         }
+
         .card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            padding: 25px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid rgba(0,0,0,0.05);
         }
+
         .card:hover {
-            transform: scale(1.03);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
         }
-        .card-text {
-            font-size: 18px;
-            color: #444;
-            display: none;
-        }
-        .card.revealed .card-text {
-            display: block;
-        }
-        .card.revealed::before {
-            content: "\1F449 اضغط لتغيير البطاقة";
-            display: block;
-            margin-bottom: 10px;
-            color: #999;
-        }
+
         .card::before {
             content: "🎴 اضغط للكشف";
             font-size: 16px;
-            color: #aaa;
-            margin-bottom: 10px;
+            color: #6c757d;
+            margin-bottom: 15px;
             display: block;
+            transition: all 0.3s ease;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4a6fa5 0%, #3a5a80 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-text {
+            font-size: 18px;
+            color: #495057;
+            display: none;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .card.revealed {
+            background: linear-gradient(145deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .card.revealed::before {
+            content: "🔄 اضغط لتغيير البطاقة";
+            color: #4a6fa5;
+            font-weight: bold;
+        }
+
+        .card.revealed::after {
+            opacity: 1;
+        }
+
+        .card.revealed .card-text {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* تأثيرات الحركة */
+        @keyframes cardReveal {
+            0% { transform: rotateX(0deg); }
+            100% { transform: rotateX(360deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .card.reveal-animation {
+            animation: cardReveal 0.8s ease-out;
+        }
+
+        .card.float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* تأثيرات النص */
+        .card-text span {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .card-text:hover span {
+            transform: scale(1.1);
+        }
+
+        /* زر إعادة التشغيل */
+        .reset-btn {
+            margin-top: 40px;
+            padding: 12px 25px;
+            background: linear-gradient(90deg, #4a6fa5 0%, #3a5a80 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* تأثيرات للهواتف */
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -75,13 +196,16 @@ body {
             <div class="card-text">🎋 تقف كأنك خيزرانة: قدمان ثابتتان، كتفان مسترخيتان، نظرات للأمام</div>
         </div>
         <div class="card" onclick="toggleCard(this)">
-            <div class="card-text">👖 يداك في جيبك طوال الوقت </div>
+            <div class="card-text">👖 يداك في جيبك طوال الوقت</div>
         </div>
         <div class="card" onclick="toggleCard(this)">
             <div class="card-text">🤯 تضع يدًا على رأسك وأنت تتحدث!</div>
         </div>
         <div class="card" onclick="toggleCard(this)">
             <div class="card-text">🪑 تتشبث بالمنصة أو الطاولة أمامك</div>
+        </div>
+        <div class="card" onclick="toggleCard(this)">
+            <div class="card-text"> اختر وضعية وقوف وأنت تكتب على السبورة.</div>
         </div>
         <div class="card" onclick="toggleCard(this)">
             <div class="card-text">🦶 تقف على قدم واحدة أو تغير وزنك باستمرار</div>
@@ -93,23 +217,74 @@ body {
             <div class="card-text">🧍‍♂️ وقفة واثقة: استقامة، توازن، نظرات مباشرة</div>
         </div>
         <div class="card" onclick="toggleCard(this)">
-            <div class="card-text"> مدرب يشعر بالتعب لكنه يحاول التماسك</div>
+            <div class="card-text">😴 مدرب يشعر بالتعب لكنه يحاول التماسك</div>
         </div>
         <div class="card" onclick="toggleCard(this)">
-            <div class="card-text"> هيئة مائلة للأمام بزيادة.</div>
-        </div>
-        <div class="card" onclick="toggleCard(this)">
-            <div class="card-text"> اختر وضعية وقوف وأنت تكتب على السبورة.</div>
+            <div class="card-text">↘️ هيئة مائلة للأمام بزيادة.</div>
         </div>
         <div class="card" onclick="toggleCard(this)">
             <div class="card-text"> اختر وضعية وقوف وأنت تكتب على السبورة.</div>
         </div>
     </div>
 
+    <button class="reset-btn" onclick="resetAllCards()">
+        <i class="fas fa-redo"></i> إعادة تشغيل جميع البطاقات
+    </button>
+
     <script>
         function toggleCard(card) {
-            card.classList.toggle('revealed');
+            // إضافة تأثير الحركة
+            card.classList.add('reveal-animation');
+            
+            // تبديل الحالة بعد انتهاء الحركة
+            setTimeout(() => {
+                card.classList.toggle('revealed');
+                card.classList.remove('reveal-animation');
+            }, 400);
         }
+
+        function resetAllCards() {
+            const cards = document.querySelectorAll('.card');
+            
+            // تأثير لكل بطاقة
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('reveal-animation');
+                    
+                    setTimeout(() => {
+                        card.classList.remove('revealed');
+                        card.classList.remove('reveal-animation');
+                    }, 400);
+                }, index * 100);
+            });
+        }
+
+        // إضافة تأثير الطفو العشوائي لبعض البطاقات
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                if (Math.random() > 0.7) {
+                    card.classList.add('float-animation');
+                    card.style.animationDelay = `${Math.random() * 2}s`;
+                }
+            });
+        });
     </script>
+<footer style="
+    text-align: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-family: HelveticaNeueLTArabic, sans-serif;
+    font-size: 20px;
+    border-top: 1px solid #e9ecef;
+    margin-top: 30px;
+">
+    جميع الحقوق محفوظة &copy; <span id="year"></span> لفريق دليل
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</footer>
 </body>
 </html>
