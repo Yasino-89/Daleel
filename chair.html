@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎭 اختياراتي ... مدمرة نشاطاتي؟</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    @font-face {
+      font-family: 'HelveticaNeueLTArabic';
+      src: url('HelveticaNeueLTArabic-Roman.ttf') format('truetype');
+    }
+
+    body {
+      font-family: 'HelveticaNeueLTArabic', sans-serif;
+      background: linear-gradient(-45deg, #f5f7fa, #c3cfe2, #e8eef4, #d6e1f0);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+      min-height: 100vh;
+    }
+    
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+      display: inline-block;
+      animation: pulse 2s infinite, float 4s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #e74c3c, 0 0 20px #e74c3c; }
+      to { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e74c3c, 0 0 40px #e74c3c; }
+    }
+    
+    h1:after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      bottom: -10px;
+      left: 25%;
+      background: #4a6fa5;
+      border-radius: 2px;
+    }
+    
+    .buttons-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      background-color: #4a6fa5;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    button:after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255,255,255,0.1);
+      transform: rotate(30deg);
+      transition: all 0.3s;
+    }
+    
+    button:hover {
+      background-color: #3a5a80;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      animation: pulse 0.5s ease;
+    }
+    
+    button:hover:after {
+      left: 100%;
+    }
+    
+    button i {
+      font-size: 16px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .result, .hint {
+      margin-top: 25px;
+      font-size: 24px;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 550px;
+      text-align: center;
+      color: #34495e;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .hint {
+      color: #5a6a7e;
+      font-size: 22px;
+      border-left: 5px solid #4a6fa5;
+    }
+    
+    .result {
+      border-left: 5px solid #e74c3c;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .chosen-list {
+      margin-top: 40px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 550px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      animation: fadeIn 0.7s ease-out;
+    }
+    
+    .chosen-list:hover {
+      box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+    }
+    
+    .chosen-list h3 {
+      margin-bottom: 15px;
+      font-size: 20px;
+      color: #2c3e50;
+      text-align: center;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    
+    .chosen-list ul {
+      list-style-type: none;
+      padding: 0;
+      text-align: right;
+    }
+    
+    .chosen-list li {
+      margin: 8px 0;
+      font-size: 18px;
+      color: #444;
+      padding: 8px 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    
+    .chosen-list li:hover {
+      background: #e9ecef;
+      transform: translateX(-5px);
+    }
+    
+    .shake-animation {
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    
+    .reveal-animation {
+      animation: glow 1s ease-in-out infinite alternate;
+    }
+    
+    .list-item-animation {
+      display: inline-block;
+      animation: fadeIn 0.5s ease-out both;
+    }
+
+    /* أنماط كرسي النار */
+    .fire-section {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .fire-chair {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+      border-radius: 50% 50% 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 10px 25px rgba(214, 48, 49, 0.3);
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .fire-chair::after {
+      content: "🔥";
+      position: absolute;
+      bottom: -40px;
+      font-size: 3rem;
+    }
+
+    .fire-participant {
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .fire-timer {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #d63031;
+      margin: 15px 0;
+      padding: 10px 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes timerGlow {
+      0% { box-shadow: 0 0 5px #d63031; }
+      50% { box-shadow: 0 0 20px #d63031; }
+      100% { box-shadow: 0 0 5px #d63031; }
+    }
+
+    .timer-active {
+      animation: timerGlow 2s infinite, pulse 1s infinite alternate;
+    }
+
+    .fire-questions {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      font-size: 1.3rem;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 550px;
+    }
+
+    .fire-controls {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .fire-reflections {
+      background: rgba(255,255,255,0.9);
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+      display: none;
+    }
+    
+    @media (max-width: 600px) {
+      body {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+      
+      .result, .hint {
+        font-size: 20px;
+        padding: 20px;
+      }
+
+      .fire-timer {
+        font-size: 1.8rem;
+        padding: 8px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 class="title-animation"><i class="fas fa-theater-masks"></i> اختياراتي ... مدمرة نشاطاتي؟</h1>
+  
+  <div class="buttons-container">
+    <button onclick="showHint()" class="button-animation"><i class="fas fa-lightbulb"></i> نقي واستحلي </button>
+    <button onclick="showName()" class="button-animation"><i class="fas fa-user-check"></i> اظهر وبان عليك الأمان</button>
+    <button onclick="showFireChair()" class="button-animation" id="fireChairBtn" style="display: none;"><i class="fas fa-fire"></i> كرسي النار</button>
+  </div>
+
+  <div class="hint" id="hint">
+    <i class="fas fa-eye"></i> ذوب الثلج عشان يبين اللي تحته
+  </div>
+  
+  <div class="result" id="result">
+    <i class="fas fa-user-secret"></i> اللي تحته ... سري للغاية
+  </div>
+
+  <div class="chosen-list">
+    <h3><i class="fas fa-check-circle"></i> أنتم السابقون ... تجهزوا يا لاحقين:</h3>
+    <ul id="chosenNames"></ul>
+  </div>
+
+  <!-- قسم كرسي النار -->
+  <div class="fire-section" id="fireSection">
+    <div class="fire-chair">
+      <i class="fas fa-chair"></i>
+    </div>
+
+    <div class="fire-participant" id="fireParticipant">
+      ما في حدا هون
+    </div>
+
+    <div class="fire-timer" id="timer">00:00</div>
+
+    <div class="fire-questions" id="fireQuestions">
+      جاهزين نولعها؟
+    </div>
+
+    <div class="fire-controls">
+      <button onclick="startFireRound()" class="button-animation"><i class="fas fa-play"></i> اشعلوا النيران</button>
+      <button onclick="showReflections()" class="button-animation"><i class="fas fa-comment"></i> شو اللي صار</button>
+    </div>
+
+    <div class="fire-reflections" id="fireReflections">
+      <h3><i class="fas fa-brain"></i> جاوبنا:</h3>
+      <ul>
+        <li>كيف شعرت أثناء الجلسة؟</li>
+        <li>ما أصعب لحظة؟</li>
+        <li>هل زاد توترك أم قل مع كل سؤال؟</li>
+        <li>هل لاحظت متى بدأ الجمهور يحترم هدوءك؟</li>
+      </ul>
+      
+      <h3 style="margin-top: 20px;"><i class="fas fa-users"></i> وانتو شو رايكم:</h3>
+      <ul>
+        <li>متى ظهر عليه الارتباك؟</li>
+        <li>ومتى كان يبدو واثقًا؟</li>
+        <li>كيف أثرت نبرة صوته أو وقفته في انطباعكم؟</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer style="
+    text-align: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    border-top: 1px solid #e9ecef;
+    margin-top: 30px;
+  ">
+    جميع الحقوق محفوظة &copy; <span id="year"></span> لفريق دليل
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
+
+  <script>
+    let participants = [
+      { name: "نورة محمد", hint: "لما تطفي كل الضواو… تضل هي واضحة .. مفيدة بالليل" },
+      { name: "يمنى محمد", hint: "لو دخلت من الباب اليمين… هي أول وحدة تشوفها .. وفيها بركة" },
+      { name: "محمد عيسى", hint: "اسمين من أفضل البشر .. والتاريخ بدأ يتسجل من عندهم" },
+      { name: "عبدالله سلامة", hint: "اذا حبيت تصمم اشي ثلاثي الأبعاد بتروحله ، والنشامى ما منهم ....ـة" },
+      { name: "عبدالرحمن دولة", hint: "اسمه في فخامة واشي رسمي ... بس بنفس الوقت اسمه في أمان واطمئنان " },
+      { name: "أنس القصاص", hint: "ما بتحس بالملل بوجوده .. والحكاوي ما بتنتهي عنده" },
+      { name: "عبدالفتاح حزوري", hint: "أوله باب مفتوح وآخره لغز مقفول .. لغز ما حد بيحله ... بس هو بيحل كل الألغاز" },
+      { name: "حمزة الجمل", hint: "مستعد ما يشرب طول الورشة عادي، وبيذكرك بسيد الشهداء" },
+      { name: "ريم بابكر", hint: "أول خليفة .. ومدينة عربية .. بس لازم الصبح بدري قبل ما يصحى الغزال" },
+      { name: "فاطمة دولة", hint: "انها بين الفاء والتاء ... بروتوكول وقرار واستقرار" },
+      { name: "مها عبدالعال", hint: "أكيد تلاقيها بالمرتفعات .. آيم شور شي ول بي ذير" },
+      { name: "آلاء أبوحميد", hint: "نعم ربنا ما بنقدر نحصيها ... والشكر على هذي النعم عندها ما بيتوقف" },
+      { name: "شهد حسين", hint: "لو سألنا النحل أكيد بيدلنا ... على سيد شباب أهل الجنة" },
+      { name: "سارة عطية", hint: "ما بتنبسط لحالها، بتحب تبسط غيرها وتجيبلهم هدايا" },
+      { name: "آية محمد إدريس", hint: "بين الاعجاز والحكمة ... موجود أعظم البشر ..." },
+      { name: "إسراء رضا", hint: "تمشي بالليل مرتاحة البال ... بس أثرها يبني أجيال" }
+    ];
+
+    let selected = null;
+    let chosenList = [];
+    let fireParticipant = null;
+    let fireQuestions = [
+      "تكلم عن موقف محرج مررت به",
+      "صف شعورك عندما تتعرض لانتقاد حاد",
+      "كيف تتعامل مع المواقف المفاجئة؟",
+      "ما هو أكثر قرار ندمت عليه؟",
+      
+    ];
+    let currentQuestionIndex = 0;
+    let timerInterval = null;
+    let seconds = 0;
+
+    function showHint() {
+      if (participants.length === 0) {
+        document.getElementById('hint').innerHTML = '<i class="fas fa-check-circle"></i> كل المستور انكشف!';
+        document.getElementById('result').innerHTML = '<i class=""></i> 🔥شطبنا، ما ظل ثلج نذوبه🧊!';
+        return;
+      }
+      
+      const index = Math.floor(Math.random() * participants.length);
+      selected = participants[index];
+      participants.splice(index, 1);
+      
+      document.getElementById('hint').innerHTML = `<i class="fas fa-puzzle-piece"></i> فك الشيفرة: ${selected.hint}`;
+      document.getElementById('result').innerHTML = `<i class="fas fa-user-secret"></i> جاري تذويب الثلوج`;
+    }
+
+    function showName() {
+      if (selected) {
+        document.getElementById('result').classList.add('shake-animation');
+        
+        setTimeout(() => {
+          document.getElementById('result').classList.remove('shake-animation');
+          document.getElementById('result').innerHTML = `
+            <span class="reveal-animation">
+              <i class="fas fa-star"></i> اختياري هو :  <strong>${selected.name}</strong>
+            </span>
+          `;
+          
+          chosenList.push(selected.name);
+          updateChosenList();
+          
+          // تعيين المشارك المختار لكرسي النار
+          fireParticipant = selected.name;
+          document.getElementById('fireParticipant').textContent = fireParticipant;
+          document.getElementById('fireChairBtn').style.display = 'flex';
+          
+          selected = null;
+        }, 500);
+      } else {
+        document.getElementById('result').innerHTML = `
+          <span class="shake-animation">
+            <i class="fas fa-exclamation-circle"></i> ذوب الثلج بالأول!
+          </span>
+        `;
+      }
+    }
+
+    function updateChosenList() {
+      const ul = document.getElementById('chosenNames');
+      ul.innerHTML = '';
+      
+      chosenList.forEach((name, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span class="list-item-animation" style="animation-delay: ${index * 0.1}s">
+            <i class="fas fa-user-alt"></i> ${name}
+          </span>
+        `;
+        ul.appendChild(li);
+      });
+    }
+
+    function showFireChair() {
+      document.getElementById('fireSection').style.display = 'block';
+      window.scrollTo({
+        top: document.getElementById('fireSection').offsetTop,
+        behavior: 'smooth'
+      });
+    }
+
+    function startFireRound() {
+      if (!fireParticipant) {
+        alert("يا ترى مين!");
+        return;
+      }
+
+      // نعيد من أول
+      clearInterval(timerInterval);
+      seconds = 0;
+      currentQuestionIndex = 0;
+      document.getElementById('timer').textContent = '00:00';
+      document.getElementById('timer').classList.add('timer-active');
+
+      // بدء المؤقت
+      timerInterval = setInterval(updateTimer, 1000);
+
+      // عرض أول سؤال
+      showNextQuestion();
+    }
+
+    function updateTimer() {
+      seconds++;
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      const timerElement = document.getElementById('timer');
+      
+      timerElement.textContent = 
+        `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+
+      // تأثير تغيير اللون كل 10 ثواني
+      if (seconds % 10 === 0) {
+        timerElement.style.color = getRandomColor();
+        timerElement.classList.add('shake-animation');
+        setTimeout(() => {
+          timerElement.classList.remove('shake-animation');
+        }, 500);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ['#d63031', '#0984e3', '#00b894', '#fdcb6e', '#6c5ce7'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function showNextQuestion() {
+      if (currentQuestionIndex >= fireQuestions.length) {
+        document.getElementById('fireQuestions').textContent = "خلصنا، خلينا نشوفلنا واحد ثاني";
+        clearInterval(timerInterval);
+        document.getElementById('timer').classList.remove('timer-active');
+        return;
+      }
+
+      document.getElementById('fireQuestions').textContent = fireQuestions[currentQuestionIndex];
+      currentQuestionIndex++;
+
+      // تغيير السؤال كل 15 ثانية
+      setTimeout(showNextQuestion, 15000);
+    }
+
+    function showReflections() {
+      document.getElementById('fireReflections').style.display = 'block';
+      clearInterval(timerInterval);
+      document.getElementById('timer').classList.remove('timer-active');
+      window.scrollTo({
+        top: document.getElementById('fireReflections').offsetTop,
+        behavior: 'smooth'
+      });
+    }
+  </script>
+</body>
+</html>
