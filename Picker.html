@@ -216,6 +216,102 @@
       display: inline-block;
       animation: fadeIn 0.5s ease-out both;
     }
+
+    /* أنماط كرسي النار */
+    .fire-section {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .fire-chair {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+      border-radius: 50% 50% 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 10px 25px rgba(214, 48, 49, 0.3);
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .fire-chair::after {
+      content: "🔥";
+      position: absolute;
+      bottom: -40px;
+      font-size: 3rem;
+    }
+
+    .fire-participant {
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .fire-timer {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #d63031;
+      margin: 15px 0;
+      padding: 10px 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes timerGlow {
+      0% { box-shadow: 0 0 5px #d63031; }
+      50% { box-shadow: 0 0 20px #d63031; }
+      100% { box-shadow: 0 0 5px #d63031; }
+    }
+
+    .timer-active {
+      animation: timerGlow 2s infinite, pulse 1s infinite alternate;
+    }
+
+    .fire-questions {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      font-size: 1.3rem;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 550px;
+    }
+
+    .fire-controls {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .fire-reflections {
+      background: rgba(255,255,255,0.9);
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+      display: none;
+    }
     
     @media (max-width: 600px) {
       body {
@@ -235,6 +331,11 @@
         font-size: 20px;
         padding: 20px;
       }
+
+      .fire-timer {
+        font-size: 1.8rem;
+        padding: 8px 15px;
+      }
     }
   </style>
 </head>
@@ -244,6 +345,7 @@
   <div class="buttons-container">
     <button onclick="showHint()" class="button-animation"><i class="fas fa-lightbulb"></i> نقي واستحلي </button>
     <button onclick="showName()" class="button-animation"><i class="fas fa-user-check"></i> اظهر وبان عليك الأمان</button>
+    <button onclick="showFireChair()" class="button-animation" id="fireChairBtn" style="display: none;"><i class="fas fa-fire"></i> كرسي النار</button>
   </div>
 
   <div class="hint" id="hint">
@@ -258,6 +360,61 @@
     <h3><i class="fas fa-check-circle"></i> أنتم السابقون ... تجهزوا يا لاحقين:</h3>
     <ul id="chosenNames"></ul>
   </div>
+
+  <!-- قسم كرسي النار -->
+  <div class="fire-section" id="fireSection">
+    <div class="fire-chair">
+      <i class="fas fa-chair"></i>
+    </div>
+
+    <div class="fire-participant" id="fireParticipant">
+      ما في حدا هون
+    </div>
+
+    <div class="fire-timer" id="timer">00:00</div>
+
+    <div class="fire-questions" id="fireQuestions">
+      جاهزين نولعها؟
+    </div>
+
+    <div class="fire-controls">
+      <button onclick="startFireRound()" class="button-animation"><i class="fas fa-play"></i> اشعلوا النيران</button>
+      <button onclick="showReflections()" class="button-animation"><i class="fas fa-comment"></i> شو اللي صار</button>
+    </div>
+
+    <div class="fire-reflections" id="fireReflections">
+      <h3><i class="fas fa-brain"></i> جاوبنا:</h3>
+      <ul>
+        <li>كيف شعرت أثناء الجلسة؟</li>
+        <li>ما أصعب لحظة؟</li>
+        <li>هل زاد توترك أم قل مع كل سؤال؟</li>
+        <li>هل لاحظت متى بدأ الجمهور يحترم هدوءك؟</li>
+      </ul>
+      
+      <h3 style="margin-top: 20px;"><i class="fas fa-users"></i> وانتو شو رايكم:</h3>
+      <ul>
+        <li>متى ظهر عليه الارتباك؟</li>
+        <li>ومتى كان يبدو واثقًا؟</li>
+        <li>كيف أثرت نبرة صوته أو وقفته في انطباعكم؟</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer style="
+    text-align: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    border-top: 1px solid #e9ecef;
+    margin-top: 30px;
+  ">
+    جميع الحقوق محفوظة &copy; <span id="year"></span> لفريق دليل
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
 
   <script>
     let participants = [
@@ -281,6 +438,17 @@
 
     let selected = null;
     let chosenList = [];
+    let fireParticipant = null;
+    let fireQuestions = [
+      "تكلم عن موقف محرج مررت به",
+      "صف شعورك عندما تتعرض لانتقاد حاد",
+      "كيف تتعامل مع المواقف المفاجئة؟",
+      "ما هو أكثر قرار ندمت عليه؟",
+      
+    ];
+    let currentQuestionIndex = 0;
+    let timerInterval = null;
+    let seconds = 0;
 
     function showHint() {
       if (participants.length === 0) {
@@ -311,6 +479,12 @@
           
           chosenList.push(selected.name);
           updateChosenList();
+          
+          // تعيين المشارك المختار لكرسي النار
+          fireParticipant = selected.name;
+          document.getElementById('fireParticipant').textContent = fireParticipant;
+          document.getElementById('fireChairBtn').style.display = 'flex';
+          
           selected = null;
         }, 500);
       } else {
@@ -336,21 +510,83 @@
         ul.appendChild(li);
       });
     }
+
+    function showFireChair() {
+      document.getElementById('fireSection').style.display = 'block';
+      window.scrollTo({
+        top: document.getElementById('fireSection').offsetTop,
+        behavior: 'smooth'
+      });
+    }
+
+    function startFireRound() {
+      if (!fireParticipant) {
+        alert("يا ترى مين!");
+        return;
+      }
+
+      // نعيد من أول
+      clearInterval(timerInterval);
+      seconds = 0;
+      currentQuestionIndex = 0;
+      document.getElementById('timer').textContent = '00:00';
+      document.getElementById('timer').classList.add('timer-active');
+
+      // بدء المؤقت
+      timerInterval = setInterval(updateTimer, 1000);
+
+      // عرض أول سؤال
+      showNextQuestion();
+    }
+
+    function updateTimer() {
+      seconds++;
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      const timerElement = document.getElementById('timer');
+      
+      timerElement.textContent = 
+        `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+
+      // تأثير تغيير اللون كل 10 ثواني
+      if (seconds % 10 === 0) {
+        timerElement.style.color = getRandomColor();
+        timerElement.classList.add('shake-animation');
+        setTimeout(() => {
+          timerElement.classList.remove('shake-animation');
+        }, 500);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ['#d63031', '#0984e3', '#00b894', '#fdcb6e', '#6c5ce7'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function showNextQuestion() {
+      if (currentQuestionIndex >= fireQuestions.length) {
+        document.getElementById('fireQuestions').textContent = "خلصنا، خلينا نشوفلنا واحد ثاني";
+        clearInterval(timerInterval);
+        document.getElementById('timer').classList.remove('timer-active');
+        return;
+      }
+
+      document.getElementById('fireQuestions').textContent = fireQuestions[currentQuestionIndex];
+      currentQuestionIndex++;
+
+      // تغيير السؤال كل 15 ثانية
+      setTimeout(showNextQuestion, 15000);
+    }
+
+    function showReflections() {
+      document.getElementById('fireReflections').style.display = 'block';
+      clearInterval(timerInterval);
+      document.getElementById('timer').classList.remove('timer-active');
+      window.scrollTo({
+        top: document.getElementById('fireReflections').offsetTop,
+        behavior: 'smooth'
+      });
+    }
   </script>
-<footer style="
-    text-align: center;
-    padding: 15px;
-    background-color: #f8f9fa;
-    color: #6c757d;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    border-top: 1px solid #e9ecef;
-    margin-top: 30px;
-">
-    جميع الحقوق محفوظة &copy; <span id="year"></span> لفريق دليل
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
-</footer>
 </body>
 </html>
