@@ -576,24 +576,6 @@
         printReportBtn.addEventListener('click', () => {
             window.print();
         });
-                 
-            const blob = new Blob([fullHtml], { type: 'application/msword' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'تقرير-برنامج-دليل2.doc'; // Use .doc for broader compatibility
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-
-            const messageBox = document.createElement('div');
-            messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white p-4 rounded-lg shadow-lg z-50';
-            messageBox.textContent = 'تم تنزيل التقرير كملف Word (قد تحتاج إلى تمكين التحرير).';
-            document.body.appendChild(messageBox);
-            setTimeout(() => {
-                messageBox.remove();
-            }, 3000);
-        });
 
         // Back to Form Button Click
         backToFormBtn.addEventListener('click', () => {
