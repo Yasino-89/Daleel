@@ -582,6 +582,7 @@
         printReportBtn.addEventListener('click', () => {
             window.print();
         });
+                 
             const blob = new Blob([fullHtml], { type: 'application/msword' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
