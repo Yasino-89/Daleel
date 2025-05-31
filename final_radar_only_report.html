@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير برنامج دليل2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom Font - Using Noto Sans Arabic as a widely available alternative.
+           If you have 'Helvetica Neue LT Arabic - Roman', you can replace this with your @font-face rule. */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background-color: #f0f2f5;
+        }
+        /* Header gradient background - Updated to use palette colors */
+        .header-gradient {
+            background: linear-gradient(to right, #934798, #247EB1); /* From Purple to Blue */
+        }
+        /* Custom slider track and thumb styling for consistency */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            border-radius: 4px;
+        }
+        input[type="range"]:hover {
+            opacity: 1;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #247EB1; /* Blue from palette */
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #247EB1; /* Blue from palette */
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        /* Star rating styles */
+        .star-rating {
+            display: flex;
+            direction: ltr; /* Override RTL for stars to align left */
+            justify-content: flex-end; /* Align stars to the right for RTL layout */
+        }
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 1.5rem;
+            color: #ccc;
+            cursor: pointer;
+            padding: 0 2px;
+            transition: color 0.2s;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input[type="radio"]:checked ~ label {
+            color: #FFD700; /* Gold color for selected stars, keeping it as it's standard for stars */
+        }
+        /* Print specific styles */
+        @media print {
+            /* Hide elements that should not be printed */
+            .no-print {
+                display: none !important;
+            }
+            /* Ensure the report section is visible and takes full width */
+            #report-section {
+                display: block !important;
+                position: relative; /* Ensure it's positioned correctly for print */
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            /* Ensure canvas (chart) renders correctly */
+            canvas {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+            /* Adjust body padding/margin for print */
+            body {
+                padding: 0 !important;
+                margin: 0 !important;
+                background-color: #fff !important;
+            }
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <header class="header-gradient text-white p-6 rounded-lg shadow-md mb-8 flex items-center justify-between no-print">
+        <div class="flex items-center">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center ml-4">
+                <img src="https://placehold.co/48x48/247EB1/ffffff?text=شعار" alt="شعار البرنامج" class="rounded-full">
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">تقرير برنامج دليل2</h1>
+                <p class="text-sm opacity-90 mt-1">نموذج متكامل لتقييم أداء المرشدين وفق معايير البرنامج</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+
+        <section id="form-section" class="mb-8 no-print">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-[#247EB1] pb-2">نموذج التقييم</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div>
+                    <label for="mentorName" class="block text-gray-700 text-sm font-bold mb-2">اسم المرشد:</label>
+                    <input type="text" id="mentorName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]" placeholder="أدخل اسم المرشد">
+                </div>
+                <div>
+                    <label for="evaluatorName" class="block text-gray-700 text-sm font-bold mb-2">اسم المسؤول:</label>
+                    <input type="text" id="evaluatorName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]" placeholder="أدخل اسم المسؤول">
+                </div>
+                <div>
+                    <label for="trainingPeriod" class="block text-gray-700 text-sm font-bold mb-2">الفترة التدريبية:</label>
+                    <input type="text" id="trainingPeriod" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]" placeholder="مثال: ربيع 2024">
+                </div>
+                <div>
+                    <label for="evaluationDate" class="block text-gray-700 text-sm font-bold mb-2">تاريخ التقييم:</label>
+                    <input type="date" id="evaluationDate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]">
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-300 pb-2">تقييم المسؤوليات</h3>
+            <div class="space-y-6 mb-8">
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label class="block text-gray-700 font-bold mb-2">ملاحظة الدروس:</label>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-grow">
+                            <label for="lessonsAchievements" class="block text-gray-600 text-sm mb-1">عدد الإنجازات (مثال: 4/5):</label>
+                            <input type="number" id="lessonsAchievements" min="0" max="100" value="0" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]">
+                        </div>
+                        <div class="flex-grow">
+                            <label class="block text-gray-600 text-sm mb-1">تقييم الجودة:</label>
+                            <div class="star-rating" data-name="lessonsQuality">
+                                <input type="radio" id="lessonsQuality-5" name="lessonsQuality" value="5"><label for="lessonsQuality-5" title="5 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="lessonsQuality-4" name="lessonsQuality" value="4"><label for="lessonsQuality-4" title="4 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="lessonsQuality-3" name="lessonsQuality" value="3"><label for="lessonsQuality-3" title="3 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="lessonsQuality-2" name="lessonsQuality" value="2"><label for="lessonsQuality-2" title="2 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="lessonsQuality-1" name="lessonsQuality" value="1"><label for="lessonsQuality-1" title="نجمة واحدة"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label class="block text-gray-700 font-bold mb-2">جلسات التطوير:</label>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-grow">
+                            <label for="developmentAchievements" class="block text-gray-600 text-sm mb-1">عدد الإنجازات:</label>
+                            <input type="number" id="developmentAchievements" min="0" max="100" value="0" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]">
+                        </div>
+                        <div class="flex-grow">
+                            <label class="block text-gray-600 text-sm mb-1">تقييم الجودة:</label>
+                            <div class="star-rating" data-name="developmentQuality">
+                                <input type="radio" id="developmentQuality-5" name="developmentQuality" value="5"><label for="developmentQuality-5" title="5 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="developmentQuality-4" name="developmentQuality" value="4"><label for="developmentQuality-4" title="4 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="developmentQuality-3" name="developmentQuality" value="3"><label for="developmentQuality-3" title="3 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="developmentQuality-2" name="developmentQuality" value="2"><label for="developmentQuality-2" title="2 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="developmentQuality-1" name="developmentQuality" value="1"><label for="developmentQuality-1" title="نجمة واحدة"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label class="block text-gray-700 font-bold mb-2">الدعم الفردي:</label>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-grow">
+                            <label for="individualSupportAchievements" class="block text-gray-600 text-sm mb-1">عدد الإنجازات:</label>
+                            <input type="number" id="individualSupportAchievements" min="0" max="100" value="0" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]">
+                        </div>
+                        <div class="flex-grow">
+                            <label class="block text-gray-600 text-sm mb-1">تقييم الجودة:</label>
+                            <div class="star-rating" data-name="individualSupportQuality">
+                                <input type="radio" id="individualSupportQuality-5" name="individualSupportQuality" value="5"><label for="individualSupportQuality-5" title="5 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="individualSupportQuality-4" name="individualSupportQuality" value="4"><label for="individualSupportQuality-4" title="4 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="individualSupportQuality-3" name="individualSupportQuality" value="3"><label for="individualSupportQuality-3" title="3 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="individualSupportQuality-2" name="individualSupportQuality" value="2"><label for="individualSupportQuality-2" title="2 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="individualSupportQuality-1" name="individualSupportQuality" value="1"><label for="individualSupportQuality-1" title="نجمة واحدة"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label class="block text-gray-700 font-bold mb-2">التطوير المهني:</label>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-grow">
+                            <label for="professionalDevelopmentAchievements" class="block text-gray-600 text-sm mb-1">عدد الإنجازات:</label>
+                            <input type="number" id="professionalDevelopmentAchievements" min="0" max="100" value="0" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]">
+                        </div>
+                        <div class="flex-grow">
+                            <label class="block text-gray-600 text-sm mb-1">تقييم الجودة:</label>
+                            <div class="star-rating" data-name="professionalDevelopmentQuality">
+                                <input type="radio" id="professionalDevelopmentQuality-5" name="professionalDevelopmentQuality" value="5"><label for="professionalDevelopmentQuality-5" title="5 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="professionalDevelopmentQuality-4" name="professionalDevelopmentQuality" value="4"><label for="professionalDevelopmentQuality-4" title="4 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="professionalDevelopmentQuality-3" name="professionalDevelopmentQuality" value="3"><label for="professionalDevelopmentQuality-3" title="3 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="professionalDevelopmentQuality-2" name="professionalDevelopmentQuality" value="2"><label for="professionalDevelopmentQuality-2" title="2 نجوم"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="professionalDevelopmentQuality-1" name="professionalDevelopmentQuality" value="1"><label for="professionalDevelopmentQuality-1" title="نجمة واحدة"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-300 pb-2">تقييم الكفاءات الأساسية (1-5)</h3>
+            <div class="space-y-6 mb-8">
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label for="communication" class="block text-gray-700 font-bold mb-2">التواصل:</label>
+                    <input type="range" id="communication" min="1" max="5" value="3" class="w-full">
+                    <span id="communication-value" class="block text-center text-[#247EB1] font-semibold mt-2">3</span>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label for="developingOthers" class="block text-gray-700 font-bold mb-2">تطوير الآخرين:</label>
+                    <input type="range" id="developingOthers" min="1" max="5" value="3" class="w-full">
+                    <span id="developingOthers-value" class="block text-center text-[#247EB1] font-semibold mt-2">3</span>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label for="commitmentToExcellence" class="block text-gray-700 font-bold mb-2">الالتزام بالتميز:</label>
+                    <input type="range" id="commitmentToExcellence" min="1" max="5" value="3" class="w-full">
+                    <span id="commitmentToExcellence-value" class="block text-center text-[#247EB1] font-semibold mt-2">3</span>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label for="commitmentToAchievement" class="block text-gray-700 font-bold mb-2">الالتزام بالإنجاز:</label>
+                    <input type="range" id="commitmentToAchievement" min="1" max="5" value="3" class="w-full">
+                    <span id="commitmentToAchievement-value" class="block text-center text-[#247EB1] font-semibold mt-2">3</span>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label for="respect" class="block text-gray-700 font-bold mb-2">الاحترام:</label>
+                    <input type="range" id="respect" min="1" max="5" value="3" class="w-full">
+                    <span id="respect-value" class="block text-center text-[#247EB1] font-semibold mt-2">3</span>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label for="accuracyQuality" class="block text-gray-700 font-bold mb-2">الدقة والجودة:</label>
+                    <input type="range" id="accuracyQuality" min="1" max="5" value="3" class="w-full">
+                    <span id="accuracyQuality-value" class="block text-center text-[#247EB1] font-semibold mt-2">3</span>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <label for="timeManagement" class="block text-gray-700 font-bold mb-2">إدارة الوقت:</label>
+                    <input type="range" id="timeManagement" min="1" max="5" value="3" class="w-full">
+                    <span id="timeManagement-value" class="block text-center text-[#247EB1] font-semibold mt-2">3</span>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-300 pb-2">التقييم النوعي</h3>
+            <div class="space-y-6 mb-8">
+                <div>
+                    <label for="strengths" class="block text-gray-700 text-sm font-bold mb-2">نقاط القوة:</label>
+                    <textarea id="strengths" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]" placeholder="اذكر نقاط القوة للمرشد..."></textarea>
+                </div>
+                <div>
+                    <label for="areasForImprovement" class="block text-gray-700 text-sm font-bold mb-2">مجالات التحسين:</label>
+                    <textarea id="areasForImprovement" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]" placeholder="اذكر مجالات التحسين..."></textarea>
+                </div>
+                <div>
+                    <label for="futureRecommendations" class="block text-gray-700 text-sm font-bold mb-2">توصيات مستقبلية:</label>
+                    <textarea id="futureRecommendations" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-[#247EB1]" placeholder="اذكر التوصيات المستقبلية..."></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-center space-x-4 no-print">
+                <button id="generateReportBtn" class="bg-[#247EB1] hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                    إنشاء التقرير
+                </button>
+            </div>
+        </section>
+
+        <section id="report-section" class="hidden p-6 border border-gray-200 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">تقرير برنامج دليل2</h2>
+            <div class="text-center text-gray-600 mb-6">
+                <p id="report-date"></p>
+                <p id="report-mentor-info"></p>
+                <p id="report-evaluator-info"></p>
+                <p id="report-training-period"></p>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-300 pb-2">إنجازات المسؤوليات</h3>
+            <div class="overflow-x-auto mb-8 rounded-lg shadow-sm border border-gray-100">
+                <table class="min-w-full bg-white rounded-lg">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-700 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6 text-right">المسؤولية</th>
+                            <th class="py-3 px-6 text-center">عدد الإنجازات</th>
+                            <th class="py-3 px-6 text-center">تقييم الجودة</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 text-sm font-light" id="responsibility-table-body">
+                        </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-300 pb-2">تقييم الكفاءات الأساسية</h3>
+            <div class="mb-8 p-4 bg-gray-50 rounded-md shadow-sm flex justify-center items-center max-w-xs mx-auto">
+                <canvas id="competenciesRadarChart" class="w-full h-auto"></canvas>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-300 pb-2">التقييم النوعي</h3>
+            <div class="space-y-6 mb-8">
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-700 mb-2">نقاط القوة:</h4>
+                    <p id="report-strengths" class="bg-gray-50 p-4 rounded-md text-gray-700 leading-relaxed"></p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-700 mb-2">مجالات التحسين:</h4>
+                    <p id="report-areasForImprovement" class="bg-gray-50 p-4 rounded-md text-gray-700 leading-relaxed"></p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-700 mb-2">توصيات مستقبلية:</h4>
+                    <p id="report-futureRecommendations" class="bg-gray-50 p-4 rounded-md text-gray-700 leading-relaxed"></p>
+                </div>
+            </div>
+
+            <div class="flex justify-center space-x-4 no-print">
+                <button id="printReportBtn" class="bg-[#86CDBB] hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-print ml-2"></i> طباعة التقرير
+                </button>
+                <button id="exportPdfBtn" class="bg-[#E5554D] hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-file-pdf ml-2"></i> تصدير لـ PDF
+                </button>
+                <button id="exportWordBtn" class="bg-[#934798] hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-file-word ml-2"></i> تصدير لـ Word
+                </button>
+                <button id="backToFormBtn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-arrow-right ml-2"></i> إعادة التقييم
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Define color palette for radar chart and overall theme
+        const competencyColors = {
+            'التواصل': '#E5554D',
+            'تطوير الآخرين': '#F69C7A',
+            'الالتزام بالتميز': '#F8CD71',
+            'الالتزام بالإنجاز': '#86CDBB',
+            'الاحترام': '#247EB1',
+            'الدقة والجودة': '#934798',
+            'إدارة الوقت': '#86CDBB' // Reusing #86CDBB as per original prompt
+        };
+
+        // Get elements
+        const formSection = document.getElementById('form-section');
+        const reportSection = document.getElementById('report-section');
+        const generateReportBtn = document.getElementById('generateReportBtn');
+        const printReportBtn = document.getElementById('printReportBtn');
+        const exportPdfBtn = document.getElementById('exportPdfBtn'); // New PDF button
+        const exportWordBtn = document.getElementById('exportWordBtn');
+        const backToFormBtn = document.getElementById('backToFormBtn');
+
+        // Input fields
+        const mentorNameInput = document.getElementById('mentorName');
+        const evaluatorNameInput = document.getElementById('evaluatorName');
+        const trainingPeriodInput = document.getElementById('trainingPeriod');
+        const evaluationDateInput = document.getElementById('evaluationDate');
+        const strengthsInput = document.getElementById('strengths');
+        const areasForImprovementInput = document.getElementById('areasForImprovement');
+        const futureRecommendationsInput = document.getElementById('futureRecommendations');
+
+        // Report display elements
+        const reportDate = document.getElementById('report-date');
+        const reportMentorInfo = document.getElementById('report-mentor-info');
+        const reportEvaluatorInfo = document.getElementById('report-evaluator-info');
+        const reportTrainingPeriod = document.getElementById('report-training-period');
+        const responsibilityTableBody = document.getElementById('responsibility-table-body');
+        const reportStrengths = document.getElementById('report-strengths');
+        const reportAreasForImprovement = document.getElementById('report-areasForImprovement');
+        const reportFutureRecommendations = document.getElementById('report-futureRecommendations');
+
+        let radarChartInstance = null; // To store Chart.js instance
+
+        // Function to update slider value display
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            const valueSpan = document.getElementById(`${slider.id}-value`);
+            slider.addEventListener('input', () => {
+                valueSpan.textContent = slider.value;
+            });
+        });
+
+        // Function to get star rating value
+        function getStarRating(name) {
+            const selectedStar = document.querySelector(`input[name="${name}"]:checked`);
+            return selectedStar ? parseInt(selectedStar.value) : 0;
+        }
+
+        // Function to set star rating
+        function setStarRating(name, value) {
+            const radio = document.getElementById(`${name}-${value}`);
+            if (radio) {
+                radio.checked = true;
+            }
+        }
+
+        // Function to populate star rating in report
+        function generateStarHtml(rating) {
+            let starsHtml = '';
+            for (let i = 0; i < 5; i++) {
+                if (i < rating) {
+                    starsHtml += '<i class="fas fa-star text-yellow-400"></i>';
+                } else {
+                    starsHtml += '<i class="far fa-star text-gray-300"></i>';
+                }
+            }
+            return starsHtml;
+        }
+
+        // Generate Report Button Click
+        generateReportBtn.addEventListener('click', () => {
+            // Get form values
+            const mentorName = mentorNameInput.value;
+            const evaluatorName = evaluatorNameInput.value;
+            const trainingPeriod = trainingPeriodInput.value;
+            const evaluationDate = evaluationDateInput.value;
+
+            // Basic validation
+            if (!mentorName || !evaluatorName || !trainingPeriod || !evaluationDate) {
+                const messageBox = document.createElement('div');
+                messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50';
+                messageBox.textContent = 'الرجاء تعبئة جميع المعلومات الأساسية.';
+                document.body.appendChild(messageBox);
+                setTimeout(() => {
+                    messageBox.remove();
+                }, 3000);
+                return; // Stop execution if validation fails
+            }
+
+
+            const responsibilityData = [
+                {
+                    name: 'ملاحظة الدروس',
+                    achievements: document.getElementById('lessonsAchievements').value,
+                    quality: getStarRating('lessonsQuality')
+                },
+                {
+                    name: 'جلسات التطوير',
+                    achievements: document.getElementById('developmentAchievements').value,
+                    quality: getStarRating('developmentQuality')
+                },
+                {
+                    name: 'الدعم الفردي',
+                    achievements: document.getElementById('individualSupportAchievements').value,
+                    quality: getStarRating('individualSupportQuality')
+                },
+                {
+                    name: 'التطوير المهني',
+                    achievements: document.getElementById('professionalDevelopmentAchievements').value,
+                    quality: getStarRating('professionalDevelopmentQuality')
+                }
+            ];
+
+            const competencies = {
+                'التواصل': parseInt(document.getElementById('communication').value),
+                'تطوير الآخرين': parseInt(document.getElementById('developingOthers').value),
+                'الالتزام بالتميز': parseInt(document.getElementById('commitmentToExcellence').value),
+                'الالتزام بالإنجاز': parseInt(document.getElementById('commitmentToAchievement').value),
+                'الاحترام': parseInt(document.getElementById('respect').value),
+                'الدقة والجودة': parseInt(document.getElementById('accuracyQuality').value),
+                'إدارة الوقت': parseInt(document.getElementById('timeManagement').value)
+            };
+
+            const strengths = strengthsInput.value;
+            const areasForImprovement = areasForImprovementInput.value;
+            const futureRecommendations = futureRecommendationsInput.value;
+
+            // Populate Report Header
+            reportDate.textContent = `التاريخ: ${evaluationDate}`;
+            reportMentorInfo.textContent = `اسم المرشد: ${mentorName}`;
+            reportEvaluatorInfo.textContent = `اسم المسؤول: ${evaluatorName}`;
+            reportTrainingPeriod.textContent = `الفترة التدريبية: ${trainingPeriod}`;
+
+            // Populate Responsibility Table
+            responsibilityTableBody.innerHTML = ''; // Clear previous data
+            responsibilityData.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-200 hover:bg-gray-100';
+                row.innerHTML = `
+                    <td class="py-3 px-6 text-right whitespace-nowrap">${item.name}</td>
+                    <td class="py-3 px-6 text-center">${item.achievements}</td>
+                    <td class="py-3 px-6 text-center">
+                        <div class="flex justify-center">${generateStarHtml(item.quality)}</div>
+                    </td>
+                `;
+                responsibilityTableBody.appendChild(row);
+            });
+
+            // Render Radar Chart
+            const ctx = document.getElementById('competenciesRadarChart').getContext('2d');
+
+            if (radarChartInstance) {
+                radarChartInstance.destroy(); // Destroy previous chart instance if exists
+            }
+
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: Object.keys(competencies),
+                    datasets: [{
+                        label: 'تقييم الكفاءات',
+                        data: Object.values(competencies),
+                        // Use the primary blue from the palette for the chart fill and border
+                        backgroundColor: 'rgba(36, 126, 177, 0.2)', // #247EB1 with transparency
+                        borderColor: '#247EB1', // #247EB1 solid
+                        pointBackgroundColor: Object.values(competencyColors), // Unique color for each point from the palette
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: Object.values(competencyColors),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false // Hide legend as there's only one dataset
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: '#e0e0e0' // Light gray angle lines
+                            },
+                            grid: {
+                                color: '#e0e0e0' // Light gray grid lines
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    family: 'Noto Sans Arabic', // Use the specified font
+                                    weight: 'bold'
+                                },
+                                color: '#333' // Darker color for labels
+                            },
+                            suggestedMin: 1, // Minimum value for the scale
+                            suggestedMax: 5, // Maximum value for the scale
+                            ticks: {
+                                display: false, // Hide numeric ticks on the radar axis
+                                stepSize: 1,
+                                beginAtZero: true,
+                                color: '#555'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Populate Qualitative Assessment
+            reportStrengths.textContent = strengths || 'لا توجد نقاط قوة مذكورة.';
+            reportAreasForImprovement.textContent = areasForImprovement || 'لا توجد مجالات تحسين مذكورة.';
+            reportFutureRecommendations.textContent = futureRecommendations || 'لا توجد توصيات مستقبلية مذكورة.';
+
+            // Show report and hide form
+            formSection.classList.add('hidden');
+            reportSection.classList.remove('hidden');
+        });
+
+        // Print Report Button Click
+        printReportBtn.addEventListener('click', () => {
+            window.print();
+        });
+
+        // Export PDF Button Click (New Functionality)
+        exportPdfBtn.addEventListener('click', () => {
+            const element = document.getElementById('report-section');
+            const messageBox = document.createElement('div');
+            messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white p-4 rounded-lg shadow-lg z-50';
+            messageBox.textContent = 'جارٍ إنشاء ملف PDF...';
+            document.body.appendChild(messageBox);
+
+            // Temporarily hide buttons for the screenshot
+            const noPrintElements = document.querySelectorAll('.no-print');
+            noPrintElements.forEach(el => el.style.display = 'none');
+
+            html2pdf().from(element).set({
+                margin: 10,
+                filename: 'تقرير-برنامج-دليل2.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, logging: false, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save().then(() => {
+                messageBox.textContent = 'تم تنزيل التقرير كملف PDF.';
+                setTimeout(() => {
+                    messageBox.remove();
+                    noPrintElements.forEach(el => el.style.display = ''); // Re-show buttons
+                }, 3000);
+            }).catch(error => {
+                console.error('Error generating PDF:', error);
+                messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50';
+                messageBox.textContent = 'حدث خطأ أثناء تصدير التقرير كـ PDF.';
+                setTimeout(() => {
+                    messageBox.remove();
+                    noPrintElements.forEach(el => el.style.display = ''); // Re-show buttons
+                }, 3000);
+            });
+        });
+
+        // Export Word Button Click (Generates an HTML file that Word can open)
+        exportWordBtn.addEventListener('click', () => {
+            const reportContent = document.getElementById('report-section').outerHTML;
+            const styleContent = document.querySelector('style').outerHTML; // Get all custom styles
+            const fullHtml = `
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>تقرير برنامج دليل2</title>
+                    <style>
+                        /* Include necessary styles for Word */
+                        body { font-family: 'Noto Sans Arabic', sans-serif; direction: rtl; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { border: 1px solid #ddd; padding: 8px; text-align: right; }
+                        th { background-color: #f2f2f2; }
+                        /* Add any other specific styles needed for Word rendering */
+                        .hidden { display: none !important; } /* Hide hidden elements */
+                        .no-print { display: none !important; } /* Hide no-print elements */
+                        .text-center { text-align: center; }
+                        .text-right { text-align: right; }
+                        .mb-4 { margin-bottom: 1rem; }
+                        .mb-6 { margin-bottom: 1.5rem; }
+                        .mb-8 { margin-bottom: 2rem; }
+                        .p-4 { padding: 1rem; }
+                        .p-6 { padding: 1.5rem; }
+                        .rounded-lg { border-radius: 0.5rem; }
+                        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+                        .border { border-width: 1px; border-style: solid; border-color: #e2e8f0; }
+                        .border-b { border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #e2e8ff; }
+                        .bg-gray-50 { background-color: #f9fafb; }
+                        .bg-gray-100 { background-color: #f3f4f6; }
+                        .text-gray-600 { color: #4b5563; }
+                        .text-gray-700 { color: #374151; }
+                        .text-gray-800 { color: #1f2937; }
+                        .font-bold { font-weight: 700; }
+                        .text-xl { font-size: 1.25rem; }
+                        .text-3xl { font-size: 1.875rem; }
+                        .leading-relaxed { line-height: 1.625; }
+                        .flex { display: flex; }
+                        .justify-center { justify-content: center; }
+                        .items-center { align-items: center; }
+                        .space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-left: 1rem; margin-right: 0; }
+                        .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem; }
+                        .w-full { width: 100%; }
+                        .h-auto { height: auto; }
+                        .mx-auto { margin-left: auto; margin-right: auto; }
+                        /* Specific chart styles for Word */
+                        canvas { max-width: 300px; height: auto; display: block; margin: 0 auto; } /* Fixed size for Word */
+                        ${styleContent} /* Include all custom styles from the head */
+                    </style>
+                </head>
+                <body>
+                    ${reportContent}
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob([fullHtml], { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'تقرير-برنامج-دليل2.doc'; // Use .doc for broader compatibility
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+
+            const messageBox = document.createElement('div');
+            messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white p-4 rounded-lg shadow-lg z-50';
+            messageBox.textContent = 'تم تنزيل التقرير كملف Word (قد تحتاج إلى تمكين التحرير).';
+            document.body.appendChild(messageBox);
+            setTimeout(() => {
+                messageBox.remove();
+            }, 3000);
+        });
+
+        // Back to Form Button Click
+        backToFormBtn.addEventListener('click', () => {
+            reportSection.classList.add('hidden');
+            formSection.classList.remove('hidden');
+        });
+
+        // Set current date as default for evaluationDate
+        window.addEventListener('load', () => {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const day = String(today.getDate()).padStart(2, '0');
+            evaluationDateInput.value = `${year}-${month}-${day}`;
+
+            // Initialize star ratings to 0 or a default value if needed
+            document.querySelectorAll('.star-rating').forEach(starContainer => {
+                const name = starContainer.dataset.name;
+                setStarRating(name, 0); // Set all to unchecked initially
+            });
+        });
+
+    </script>
+</body>
+</html>
