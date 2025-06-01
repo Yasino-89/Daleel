@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KAFU Points Entry</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h2>KAFU Points Entry Form</h2>
+  <form id="pointsForm">
+    <input type="text" name="name" placeholder="Your Name" required><br><br>
+    <input type="text" name="group" placeholder="Group Name" required><br><br>
+    <select name="type">
+      <option value="Individual">Individual</option>
+      <option value="Team">Team</option>
+    </select><br><br>
+    <input type="number" name="points" placeholder="Points" required><br><br>
+    <input type="text" name="activity" placeholder="Activity Name"><br><br>
+    <input type="text" name="addedBy" placeholder="Added By"><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="response"></p>
+
+  <script>
+    document.getElementById('pointsForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => data[key] = value);
+
+      fetch("https://script.google.com/macros/s/AKfycbxeqHbyZLX_jLInzJKHCTBzis-ZqoVSK5xyrx19o8BwQeQD32DTJHWC52xVyXSpk5s/exec", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.text())
+      .then(response => {
+        document.getElementById("response").innerText = "✅ Points submitted successfully!";
+      })
+      .catch(error => {
+        document.getElementById("response").innerText = "❌ Error submitting points.";
+      });
+    });
+  </script>
+</body>
+</html>
